@@ -1,0 +1,18 @@
+{
+  "name": "sentimentanalysisjs",
+  "version": "1.0.0",
+  "description": "A sentiment analysis bot for a popular messaging platform known as Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Austin Yuan",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "discord.js-commando": "^0.10.0",
+    "linkedlist": "^1.0.1",
+    "npm": "^6.4.1",
+    "vader-sentiment": "^1.1.3"
+  }
+}
