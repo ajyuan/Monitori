@@ -161,7 +161,7 @@ function payout(message) {
         .setColor(0x5eecff)
         .setTitle("Command: payout")
         .addField("Your score:", 
-            (Math.round(User.score * 1000) / 1000) + " (" + ((User.score > prevScore) ? "increased " : "decreased ") 
+            (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ") 
             + Math.abs(User.score - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
 }
 
