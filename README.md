@@ -1,6 +1,7 @@
 # About
 Hello, my name is SABot!
-I'm a discord bot that encourages positivity by rewarding server members for saying nice things :D
+I'm a bot created for a social/messaging platform called Discord. My purpose is to encourage positivity
+and reward server members for saying nice things :D
 
 # Features
 * Credit system for rewarding users who consistently express positive sentiment
