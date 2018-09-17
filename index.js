@@ -1,6 +1,6 @@
 const Commando = require("discord.js-commando");
 const discord = require("discord.js");
-const bot = new Commando.Client();
+const bot = new discord.Client();
 const vader = require("vader-sentiment");
 
 const config = require("./config.json");
@@ -15,7 +15,13 @@ function User(messageLog) {
 }
 
 bot.on("ready", () => {
-    console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
+    bot.user.setStatus("availible")
+    bot.user.setPresence({
+        game: {
+            name: 'the numbers game'
+        }
+    })
+    console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
@@ -31,7 +37,7 @@ bot.on("message", (message) => {
 function commandCheck(message, command, args) {
     switch (command) {
         //Calculate a user's score
-        case "payout":
+        case "score":
             payout(message);
             break;
 
@@ -160,8 +166,8 @@ function payout(message) {
     message.channel.send(new discord.RichEmbed()
         .setColor(0x5eecff)
         .setTitle("Command: payout")
-        .addField("Your score:", 
-            (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ") 
+        .addField("Your score:",
+            (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ")
             + Math.abs(User.score - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
 }
 
@@ -170,6 +176,11 @@ function addMessage(message) {
     //ex. captionless images, bot commands, etc.
     if (message.content === "") {
         return;
+    }
+    for (var i = 0; i < config.filters.length; i++) {
+        if (message.content.charAt(0) === config.filters[i]) {
+            return;
+        }
     }
     //If a user does not exist in usermap, create a new user and place the first message in it
     newUserCheck(message);
