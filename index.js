@@ -7,6 +7,7 @@ const LinkedList = require("linkedlist");
 const userMap = new Map();
 var logging = true;
 
+//This is the User object that each user id maps to
 function User(messageLog) {
     this.score = 0;
     this.totalMessages = 0;
@@ -22,6 +23,7 @@ bot.on("ready", () => {
     })
     console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
+
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
     if (message.author.bot) return;
@@ -128,12 +130,35 @@ function commandCheck(message, command, args) {
     }
 }
 
+//Runs updateScore and outputs the result, also runs checks on edge cases since 
+//this function can be called in some edge cases
 function payout(message) {
     newUserCheck(message);
     var User = userMap.get(message.author.id);
+    const prevScore = User.score;
+    User.messages.resetCursor();
+
+    if (!updateScore(User)) {
+        message.channel.send(new discord.RichEmbed()
+            .setColor(0x5eecff)
+            .setTitle("Command: score")
+            .addField("Your score:", 0 + " (increased by 0 points from 0)"));
+        return;
+    } else {
+        message.channel.send(new discord.RichEmbed()
+            .setColor(0x5eecff)
+            .setTitle("Command: score")
+            .addField("Your score:",
+                (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ")
+                + Math.abs(User.score - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
+    }
+}
+
+//Calculates and updates the sentiment score of a user
+function updateScore(User) {
     var messagesProcessed = 0;
     var adjustment = 0;
-    const prevScore = User.score;
+
     User.messages.resetCursor();
     while (User.messages.next()) {
         console.log(User.messages.current);
@@ -149,25 +174,14 @@ function payout(message) {
         }
     }
     if (User.totalMessages + messagesProcessed === 0) {
-        message.channel.send(new discord.RichEmbed()
-            .setColor(0x5eecff)
-            .setTitle("Command: payout")
-            .addField("Your score:", 0 + " (increased by 0 points from 0)"));
-        return;
+        return false;
     } else {
         User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
         User.score = Math.round(User.score * 1000) / 1000;
+        User.messages = new LinkedList();
+        User.totalMessages += messagesProcessed;
+        return true;
     }
-
-    User.messages = new LinkedList();
-    User.totalMessages += messagesProcessed;
-
-    message.channel.send(new discord.RichEmbed()
-        .setColor(0x5eecff)
-        .setTitle("Command: payout")
-        .addField("Your score:",
-            (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ")
-            + Math.abs(User.score - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
 }
 
 function addMessage(message) {
@@ -186,6 +200,8 @@ function addMessage(message) {
     userMap.get(message.author.id).messages.push(message.content);
 }
 
+//Checks if a user's id already exists in the user map. If not, it will initialize a new user
+//and map the user's id to it
 function newUserCheck(message) {
     if (!userMap.has(message.author.id)) {
         var messages = new LinkedList();
