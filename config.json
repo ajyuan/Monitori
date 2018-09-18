@@ -1,5 +1,7 @@
 {
     "token" : "NDgwNTk1ODAxODY5OTEwMDE2.Dlygwg.jY6svFrjJzk5rqiQrxEq_6bwoe8",
     "prefix" : "$",
-    "filters" : ["$", "!"]
+    "filters" : ["$", "!"],
+    "autopay" : true,
+    "autopayThreshold" : 5
 }

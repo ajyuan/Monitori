@@ -35,6 +35,8 @@ bot.on("message", (message) => {
     commandCheck(message, command, args);
 })
 
+/*This is the main message handing function
+It will handle incoming messages and run the appropriate function if a command is detected*/
 function commandCheck(message, command, args) {
     switch (command) {
         //Calculate a user's score
@@ -44,9 +46,11 @@ function commandCheck(message, command, args) {
 
         //Log all messages that aren't recognized commands
         default:
+            console.log(message);
             addMessage(message);
             break;
 
+        //Show logging status
         case "status":
             var myInfo = new discord.RichEmbed()
                 .setTitle("Bot Status")
@@ -59,6 +63,7 @@ function commandCheck(message, command, args) {
             }
             message.channel.send(myInfo);
             break;
+        //Enable logging
         case "activate":
             logging = true;
             message.channel.send(new discord.RichEmbed()
@@ -66,6 +71,7 @@ function commandCheck(message, command, args) {
                 .setTitle("Command: activate")
                 .setDescription("Logging is now active!"));
             break;
+        //Disable logging
         case "deactivate":
             logging = false;
             message.channel.send(new discord.RichEmbed()
@@ -74,7 +80,7 @@ function commandCheck(message, command, args) {
                 .setDescription("Logging has been deactivated!"));
             break;
 
-        //DEBUG COMMANDS
+        //Shows all messages mapped to the senders user id
         case "seelog":
             if (userMap.get(message.author.id) === undefined) {
                 message.channel.send(new discord.RichEmbed()
@@ -98,6 +104,7 @@ function commandCheck(message, command, args) {
                 message.channel.send(userLog.current);
             }
             break;
+        //Clears a user's log if argument = user, clears everyone's log if "all" is given as argument
         case "clearlog":
             if (args[0] == "null") {
                 message.channel.send(new discord.RichEmbed()
@@ -133,7 +140,7 @@ function commandCheck(message, command, args) {
 //Runs updateScore and outputs the result, also runs checks on edge cases since 
 //this function can be called in some edge cases
 function payout(message) {
-    newUserCheck(message);
+    newUserCheck(message.author.id);
     var User = userMap.get(message.author.id);
     const prevScore = User.score;
     User.messages.resetCursor();
@@ -154,7 +161,10 @@ function payout(message) {
     }
 }
 
-//Calculates and updates the sentiment score of a user
+/*
+Calculates and updates the sentiment score of a user
+Returns true if elligable messages to process were found, returns false otherwise
+*/
 function updateScore(User) {
     var messagesProcessed = 0;
     var adjustment = 0;
@@ -165,7 +175,7 @@ function updateScore(User) {
 
         /*
         Because most sentenances may not be easily identified as positive or negative sentiment,
-        this bot will automatically filter out statements with relatively low compound scores
+        we will automatically filter out statements with relatively low compound scores
         to preserve consistency
         */
         if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= 0.5) {
@@ -184,6 +194,10 @@ function updateScore(User) {
     }
 }
 
+/*
+Adds a given message to its respective user's log
+Performs checks: User exists, message is not empty, message does not begin with filtered prefix
+*/
 function addMessage(message) {
     //filters out messages that are not intended to be analyzed,
     //ex. captionless images, bot commands, etc.
@@ -195,18 +209,24 @@ function addMessage(message) {
             return;
         }
     }
-    //If a user does not exist in usermap, create a new user and place the first message in it
-    newUserCheck(message);
-    userMap.get(message.author.id).messages.push(message.content);
+    const User = message.author.id;
+    newUserCheck(User);  //If a user does not exist in usermap, create a new user
+    userMap.get(User).messages.push(message.content);  //Inserts the message
+
+    //
+    if (config.autopay && userMap.get(User).messages.length >= config.autopayThreshold) {
+        updateScore(userMap.get(User));
+        console.log(message.author + " was automatically paid")
+    }
 }
 
 //Checks if a user's id already exists in the user map. If not, it will initialize a new user
 //and map the user's id to it
-function newUserCheck(message) {
-    if (!userMap.has(message.author.id)) {
+function newUserCheck(id) {
+    if (!userMap.has(id)) {
         var messages = new LinkedList();
         var newUser = new User(messages);
-        userMap.set(message.author.id, newUser);
+        userMap.set(id, newUser);
     }
 }
 
