@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "discord.js-commando": "^0.10.0",
     "linkedlist": "^1.0.1",
     "npm": "^6.4.1",
     "vader-sentiment": "^1.1.3"

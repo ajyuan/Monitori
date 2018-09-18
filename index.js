@@ -1,4 +1,3 @@
-const Commando = require("discord.js-commando");
 const discord = require("discord.js");
 const bot = new discord.Client();
 const vader = require("vader-sentiment");
