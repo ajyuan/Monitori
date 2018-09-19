@@ -1,19 +1,9 @@
 const discord = require("discord.js");
-const vader = require("vader-sentiment");
-const LinkedList = require("linkedlist");
 const config = require("./config.json");
-//const uMap = require("./userMap.js");
+const userMap = require("./userMap.js");
 
 const bot = new discord.Client();
-const userMap = new Map();
 var logging = true;
-
-//This is the User object that each user id maps to
-function User(messageLog) {
-    this.score = 0;
-    this.totalMessages = 0;
-    this.messages = messageLog;
-}
 
 bot.on("ready", () => {
     bot.user.setStatus("availible")
@@ -48,7 +38,7 @@ function commandCheck(message, command, args) {
         //Log all messages that aren't recognized commands
         default:
             //console.log(message);
-            addMessage(message);
+            userMap.add(message)
             break;
 
         //Show logging status
@@ -83,31 +73,19 @@ function commandCheck(message, command, args) {
 
         //Shows all messages mapped to the senders user id
         case "seelog":
-            if (userMap.get(message.author.id) === undefined) {
+            var output = userMap.toString(message.author.id);
+            if (output === null) {
                 message.channel.send(new discord.RichEmbed()
                     .setColor(0x5eecff)
                     .setTitle("Command: seelog")
                     .setDescription("Your log is currently empty!"));
                 break;
-            }
-            var userLog = userMap.get(message.author.id).messages;
-            if (userLog === null || userLog.length === 0) {
+            } else {
                 message.channel.send(new discord.RichEmbed()
-                    .setColor(0x5eecff)
-                    .setTitle("Command: seelog")
-                    .setDescription("Your log is currently empty!"));
-                break;
-            }
-            userLog.resetCursor();
-            var output = "";
-            while (userLog.next()) {
-                output += userLog.current;
-                output += "\n";
-            }
-            message.channel.send(new discord.RichEmbed()
                     .setColor(0x5eecff)
                     .setTitle("Command: seelog")
                     .setDescription(output));
+            }
             break;
         //Clears a user's log if argument = user, clears everyone's log if "all" is given as argument
         case "clearlog":
@@ -145,81 +123,23 @@ function commandCheck(message, command, args) {
 //Runs updateScore and outputs the result, also runs checks on edge cases since 
 //this function can be called in some edge cases
 function payout(message) {
-    newUserCheck(message.author.id);
-    var User = userMap.get(message.author.id);
-    const prevScore = User.score;
-    User.messages.resetCursor();
+    var id = message.author.id;
+    const prevScore = userMap.score(id);
 
-    if (!updateScore(User)) {
+    if (!userMap.updateScore(id)) {
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
             .addField("Your score:", 0 + " (increased by 0 points from 0)"));
         return;
     } else {
+        var currScore = userMap.score(id);
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
             .addField("Your score:",
-                (Math.round(User.score * 1000) / 1000) + " (" + ((User.score >= prevScore) ? "increased " : "decreased ")
-                + Math.abs(User.score - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
-    }
-}
-
-/*
-Calculates and updates the sentiment score of a user
-Returns true if elligable messages to process were found, returns false otherwise
-*/
-function updateScore(User) {
-    var messagesProcessed = 0;
-    var adjustment = 0;
-
-    User.messages.resetCursor();
-    while (User.messages.next()) {
-        /*
-        Because most sentenances may not be easily identified as positive or negative sentiment,
-        we will automatically filter out statements with relatively low compound scores
-        to preserve consistency
-        */
-        if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= 0.5) {
-            adjustment += vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound;
-            messagesProcessed++;
-        }
-    }
-    if (User.totalMessages + messagesProcessed === 0) {
-        User.messages = new LinkedList();
-        return false;
-    } else {
-        User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
-        User.score = Math.round(User.score * 1000) / 1000;
-        User.messages = new LinkedList();
-        User.totalMessages += messagesProcessed;
-        return true;
-    }
-}
-
-/*
-Adds a given message to its respective user's log
-Performs checks: User exists, message is not empty, message does not begin with filtered prefix
-*/
-function addMessage(message) {
-    //filters out messages that are not intended to be analyzed,
-    //ex. captionless images, bot commands, etc.
-    if (message.content === "") {
-        return;
-    }
-    for (var i = 0; i < config.filters.length; i++) {
-        if (message.content.charAt(0) === config.filters[i]) {
-            return;
-        }
-    }
-    const User = message.author.id;
-    newUserCheck(User);  //If a user does not exist in usermap, create a new user
-    userMap.get(User).messages.push(message.content);  //Inserts the message
-
-    if (config.autopay > 0 && userMap.get(User).messages.length >= config.autopayThreshold) {
-        updateScore(userMap.get(User));
-        console.log(message.author + " was automatically paid")
+                (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")
+                + Math.abs(currScore - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
     }
 }
 

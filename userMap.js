@@ -1,3 +1,4 @@
+const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
 const config = require("./config.json");
 const userMap = new Map();
@@ -9,7 +10,13 @@ function User(messageLog) {
     this.messages = messageLog;
 }
 module.exports = {
-    add: function (id, message) {
+    /*
+    Adds a given message to its respective user's log
+    Performs checks: User exists, message is not empty, message does not begin with filtered prefix
+    */
+    add: function ( message) {
+        //filters out messages that are not intended to be analyzed,
+        //ex. captionless images, bot commands, etc.
         if (message.content === "") {
             return;
         }
@@ -18,6 +25,7 @@ module.exports = {
                 return;
             }
         }
+        const id = message.author.id;
         newUserCheck(id); //If a user does not exist in usermap, create a new user
         userMap.get(id).messages.push(message.content);  //Inserts the message
 
@@ -82,6 +90,10 @@ module.exports = {
             output += "\n";
         }
         return output;
+    },
+    score: function(id) {
+        newUserCheck(id);
+        return userMap.get(id).score;
     }
 };
 
