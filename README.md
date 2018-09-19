@@ -4,15 +4,15 @@ I'm a sentiment analysis bot built for a social/messaging platform called Discor
 user engagement while encouraging positivity and reward server members for saying nice things :D
 
 # Features
-* Message caching system for storage and periodic analysis
+* Message caching system for storage and adaptive score calculation
 * Credit system for rewarding users who consistently express positive sentiment
 * Leaderboard system for most positive users in a given server
 
 # Configuration
-**Prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status)
-**Filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc.
+**Prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status) <br />
+**Filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc. <br />
 **autopayThreshold:** Bot will automatically process all messages in a user's log after it reaches this number of messages.
-Set the value to 0 to disable. Users will instead have their scores updated when the $score function is run.
+Set the value to 0 to disable. Users will instead have their scores updated when the $score function is run. <br />
 
 # How I work 
 To determine the sentiment of users, I generate a log of all messages written a server and map them to their 
