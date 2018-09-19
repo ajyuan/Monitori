@@ -46,7 +46,7 @@ function commandCheck(message, command, args) {
 
         //Log all messages that aren't recognized commands
         default:
-            console.log(message);
+            //console.log(message);
             addMessage(message);
             break;
 
@@ -97,12 +97,16 @@ function commandCheck(message, command, args) {
                     .setDescription("Your log is currently empty!"));
                 break;
             }
-            message.channel.send(" --- " + message.author + "'s Log ---");
             userLog.resetCursor();
-            //console.log("Current length is: " + temp.length);
+            var output = "";
             while (userLog.next()) {
-                message.channel.send(userLog.current);
+                output += userLog.current;
+                output += "\n";
             }
+            message.channel.send(new discord.RichEmbed()
+                    .setColor(0x5eecff)
+                    .setTitle("Command: seelog")
+                    .setDescription(output));
             break;
         //Clears a user's log if argument = user, clears everyone's log if "all" is given as argument
         case "clearlog":
@@ -184,6 +188,7 @@ function updateScore(User) {
         }
     }
     if (User.totalMessages + messagesProcessed === 0) {
+        User.messages = new LinkedList();
         return false;
     } else {
         User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
@@ -214,7 +219,7 @@ function addMessage(message) {
     userMap.get(User).messages.push(message.content);  //Inserts the message
 
     //
-    if (config.autopay && userMap.get(User).messages.length >= config.autopayThreshold) {
+    if (config.autopay > 0 && userMap.get(User).messages.length >= config.autopayThreshold) {
         updateScore(userMap.get(User));
         console.log(message.author + " was automatically paid")
     }
