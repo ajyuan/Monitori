@@ -12,7 +12,7 @@ user engagement while encouraging positivity and reward server members for sayin
 **Prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status)
 **Filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc.
 **autopayThreshold:** Bot will automatically process all messages in a user's log after it reaches this number of messages.
-Set the value to 0 to disable. Users will instead have their scores updated when the $payout function is run.
+Set the value to 0 to disable. Users will instead have their scores updated when the $score function is run.
 
 # How I work 
 To determine the sentiment of users, I generate a log of all messages written a server and map them to their 
