@@ -1,11 +1,18 @@
 # About
 Hello, my name is SABot!
-I'm a bot created for a social/messaging platform called Discord. My purpose is to encourage positivity
-and reward server members for saying nice things :D
+I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase
+user engagement while encouraging positivity and reward server members for saying nice things :D
 
 # Features
+* Message caching system for storage and periodic analysis
 * Credit system for rewarding users who consistently express positive sentiment
 * Leaderboard system for most positive users in a given server
+
+# Configuration
+**Prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status)
+**Filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc.
+**autopayThreshold:** Bot will automatically process all messages in a user's log after it reaches this number of messages.
+Set the value to 0 to disable. Users will instead have their scores updated when the $payout function is run.
 
 # How I work 
 To determine the sentiment of users, I generate a log of all messages written a server and map them to their 
