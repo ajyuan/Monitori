@@ -1,9 +1,10 @@
 const discord = require("discord.js");
-const bot = new discord.Client();
 const vader = require("vader-sentiment");
-
-const config = require("./config.json");
 const LinkedList = require("linkedlist");
+const config = require("./config.json");
+//const uMap = require("./userMap.js");
+
+const bot = new discord.Client();
 const userMap = new Map();
 var logging = true;
 
@@ -175,8 +176,6 @@ function updateScore(User) {
 
     User.messages.resetCursor();
     while (User.messages.next()) {
-        console.log(User.messages.current);
-
         /*
         Because most sentenances may not be easily identified as positive or negative sentiment,
         we will automatically filter out statements with relatively low compound scores
@@ -218,20 +217,9 @@ function addMessage(message) {
     newUserCheck(User);  //If a user does not exist in usermap, create a new user
     userMap.get(User).messages.push(message.content);  //Inserts the message
 
-    //
     if (config.autopay > 0 && userMap.get(User).messages.length >= config.autopayThreshold) {
         updateScore(userMap.get(User));
         console.log(message.author + " was automatically paid")
-    }
-}
-
-//Checks if a user's id already exists in the user map. If not, it will initialize a new user
-//and map the user's id to it
-function newUserCheck(id) {
-    if (!userMap.has(id)) {
-        var messages = new LinkedList();
-        var newUser = new User(messages);
-        userMap.set(id, newUser);
     }
 }
 
