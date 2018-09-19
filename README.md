@@ -9,8 +9,8 @@ user engagement while encouraging positivity and reward server members for sayin
 * Leaderboard system for most positive users in a given server
 
 # Configuration
-**Prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status) <br />
-**Filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc. <br />
+**prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status) <br />
+**filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc. <br />
 **autopayThreshold:** Bot will automatically process all messages in a user's log after it reaches this number of messages.
 Set the value to 0 to disable. Users will instead have their scores updated when the $score function is run. <br />
 
