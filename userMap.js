@@ -40,7 +40,7 @@ module.exports = {
     Calculates and updates the sentiment score of a user
     Returns true if elligable messages to process were found, returns false otherwise
     */
-    updateScore: function (id) {
+    updateUserScore: function (id) {
         var User = userMap.get(id);
         var messagesProcessed = 0;
         var adjustment = 0;
@@ -66,6 +66,13 @@ module.exports = {
             User.messages = new LinkedList();
             User.totalMessages += messagesProcessed;
             return true;
+        }
+    },
+    updateAllScores: function() {
+        var iterator = userMap.keys();
+        while(!iterator.next()) {
+            console.log(iterator.value);
+            this.updateUserScore(iterator.value);
         }
     },
     clearUser: function (id) {

@@ -1,6 +1,7 @@
 const discord = require("discord.js");
 const config = require("./config.json");
 const userMap = require("./userMap");
+const leaderBoard = require("./leaderBoard");
 
 const bot = new discord.Client();
 var logging = true;
@@ -34,7 +35,10 @@ function commandCheck(message, command, args) {
         case "score":
             payout(message);
             break;
-
+        case "refresh":
+            userMap.updateAllScores();
+        case "leaderboard":
+            leaderBoard.generate();
         //Log all messages that aren't recognized commands
         default:
             //console.log(message);
@@ -120,13 +124,13 @@ function commandCheck(message, command, args) {
     }
 }
 
-//Runs updateScore and outputs the result, also runs checks on edge cases since 
+//Runs updateUserScore and outputs the result, also runs checks on edge cases since 
 //this function can be called in some edge cases
 function payout(message) {
     var id = message.author.id;
     const prevScore = userMap.score(id);
 
-    if (!userMap.updateScore(id)) {
+    if (!userMap.updateUserScore(id)) {
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
