@@ -4,17 +4,19 @@ const config = require("./config.json");
 const userMap = new Map();
 
 //This is the User object that each user id maps to
-function User(messageLog) {
-    this.score = 0;
-    this.totalMessages = 0;
-    this.messages = messageLog;
+class User {
+    constructor(messageLog) {
+        this.score = 0;
+        this.totalMessages = 0;
+        this.messages = messageLog;
+    }
 }
 module.exports = {
     /*
     Adds a given message to its respective user's log
     Performs checks: User exists, message is not empty, message does not begin with filtered prefix
     */
-    add: function ( message) {
+    add: function (message) {
         //filters out messages that are not intended to be analyzed,
         //ex. captionless images, bot commands, etc.
         if (message.content === "") {
@@ -91,7 +93,7 @@ module.exports = {
         }
         return output;
     },
-    score: function(id) {
+    score: function (id) {
         newUserCheck(id);
         return userMap.get(id).score;
     }

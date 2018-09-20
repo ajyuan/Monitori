@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 const config = require("./config.json");
-const userMap = require("./userMap.js");
+const userMap = require("./userMap");
 
 const bot = new discord.Client();
 var logging = true;
@@ -96,14 +96,14 @@ function commandCheck(message, command, args) {
                     .setColor(0xff6860)
                 );
             } else if (args[0] === "user" || args[0] === "me") {
-                userMap.delete(message.author.id);
+                userMap.clearUser(message.author.id);
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Command: clearlog")
                     .setDescription("Cleared " + message.author + "'s log!")
                     .setColor(0x5eecff)
                 )
             } else if (args[0] === "all" || args[0] === "everyone") {
-                userMap.clear();
+                userMap.clearAll();
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Command: clearlog")
                     .setDescription("Log wiped!")
