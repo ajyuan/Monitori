@@ -7,6 +7,7 @@ const userMap = new Map();
 class User {
     constructor(messageLog) {
         this.score = 0;
+        this.prevscore = 0;
         this.totalMessages = 0;
         this.messages = messageLog;
     }
@@ -36,45 +37,38 @@ module.exports = {
             console.log(message.author + " was automatically paid")
         }
     },
+    // ------------------ SCORE FUNCTIONS ---------------------------
     /*
     Calculates and updates the sentiment score of a user
     Returns true if elligable messages to process were found, returns false otherwise
     */
     updateUserScore: function (id) {
-        var User = userMap.get(id);
-        var messagesProcessed = 0;
-        var adjustment = 0;
-
-        User.messages.resetCursor();
-        while (User.messages.next()) {
-            /*
-            Because most sentenances may not be easily identified as positive or negative sentiment,
-            we will automatically filter out statements with relatively low compound scores
-            to preserve consistency
-            */
-            if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= 0.5) {
-                adjustment += vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound;
-                messagesProcessed++;
-            }
-        }
-        if (User.totalMessages + messagesProcessed === 0) {
-            User.messages = new LinkedList();
-            return false;
-        } else {
-            User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
-            User.score = Math.round(User.score * 1000) / 1000;
-            User.messages = new LinkedList();
-            User.totalMessages += messagesProcessed;
-            return true;
-        }
+        return pay(id);
     },
-    updateAllScores: function() {
-        let keys = Array.from(userMap.keys() );
+    updateAllScores: function () {
+        let keys = Array.from(userMap.keys());
         keys.forEach(function (key, index) {
-            console.log(key);
-            updateUserScore(key);
+            if (key !== config.botid) {
+                console.log("Refreshing " + key);
+                pay(key);
+            }
         });
     },
+    score: function (id) {
+        newUserCheck(id);
+        return userMap.get(id).score;
+    },
+    prevscore: function (id) {
+        newUserCheck(id);
+        return userMap.get(id).prevscore;
+    },
+    shiftscore: function (id) {
+        newUserCheck(id);
+        var User = userMap.get(id);
+        User.prevscore = User.score;
+    },
+
+    // ----------------- DATA FUNCTIONS ---------------------------
     clearUser: function (id) {
         userMap.delete(id);
     },
@@ -100,11 +94,7 @@ module.exports = {
         }
         return output;
     },
-    score: function (id) {
-        newUserCheck(id);
-        return userMap.get(id).score;
-    },
-    getKeys: function() {
+    getKeys: function () {
         return userMap.keys();
     }
 };
@@ -113,8 +103,39 @@ module.exports = {
 //and map the user's id to it
 function newUserCheck(id) {
     if (!userMap.has(id)) {
+        console.log("Created new user for " + id);
         var messages = new LinkedList();
         var newUser = new User(messages);
         userMap.set(id, newUser);
+    }
+}
+
+function pay(id) {
+    newUserCheck(id);
+    var User = userMap.get(id);
+    var messagesProcessed = 0;
+    var adjustment = 0;
+
+    User.messages.resetCursor();
+    while (User.messages.next()) {
+        /*
+        Because most sentenances may not be easily identified as positive or negative sentiment,
+        we will automatically filter out statements with relatively low compound scores
+        to preserve consistency
+        */
+        if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= 0.5) {
+            adjustment += vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound;
+            messagesProcessed++;
+        }
+    }
+    if (User.totalMessages + messagesProcessed === 0) {
+        User.messages = new LinkedList();
+        return false;
+    } else {
+        User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
+        User.score = Math.round(User.score * 1000) / 1000;
+        User.messages = new LinkedList();
+        User.totalMessages += messagesProcessed;
+        return true;
     }
 }

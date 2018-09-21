@@ -89,6 +89,7 @@ function commandCheck(message, command, args) {
         //------------------- lEADERBOARD FUNCTIONS -------------------
         case "leaderboard":
             leaderBoard.generate(message.guild.members);
+            break;
         
         //------------------- BOT FUNCTIONS -------------------
         //Log all messages that aren't recognized commands
@@ -133,7 +134,7 @@ function commandCheck(message, command, args) {
 //this function can be called in some edge cases
 function payout(message) {
     var id = message.author.id;
-    const prevScore = userMap.score(id);
+    const prevScore = userMap.prevscore(id);
 
     if (!userMap.updateUserScore(id)) {
         message.channel.send(new discord.RichEmbed()
@@ -149,6 +150,7 @@ function payout(message) {
             .addField("Your score:",
                 (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")
                 + Math.abs(currScore - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
+        userMap.shiftscore(id);
     }
 }
 

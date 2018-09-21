@@ -1,13 +1,13 @@
 const userMap = require("./userMap");
+const config = require("./config.json")
 
 module.exports = {
-    generate: function(ids) {
-        ids.tap(user => console.log(user.id));
-        
-        let keys = Array.from(userMap.getKeys() );
-        keys.forEach(function (key, index) {
-            console.log(key);
-            userMap.updateUserScore(key);
+    generate: function (ids) {
+        ids.tap(user => {
+            if (user.id !== config.botid) {
+                console.log(user.id);
+                userMap.updateUserScore(user.id);
+            }
         });
     }
 }
