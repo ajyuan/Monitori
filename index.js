@@ -31,50 +31,14 @@ bot.on("message", (message) => {
 It will handle incoming messages and run the appropriate function if a command is detected*/
 function commandCheck(message, command, args) {
     switch (command) {
+        //------------------- USERMAP FUNCTIONS -------------------
         //Calculate a user's score
         case "score":
             payout(message);
             break;
         case "refresh":
             userMap.updateAllScores();
-        case "leaderboard":
-            leaderBoard.generate();
-        //Log all messages that aren't recognized commands
-        default:
-            //console.log(message);
-            userMap.add(message)
             break;
-
-        //Show logging status
-        case "status":
-            var myInfo = new discord.RichEmbed()
-                .setTitle("Bot Status")
-            if (logging) {
-                myInfo.setColor(0x47ff96)
-                myInfo.setDescription("Logging is currently active");
-            } else {
-                myInfo.setColor(0xff6860)
-                myInfo.setDescription("Logging is currently inactive")
-            }
-            message.channel.send(myInfo);
-            break;
-        //Enable logging
-        case "activate":
-            logging = true;
-            message.channel.send(new discord.RichEmbed()
-                .setColor(0x5eecff)
-                .setTitle("Command: activate")
-                .setDescription("Logging is now active!"));
-            break;
-        //Disable logging
-        case "deactivate":
-            logging = false;
-            message.channel.send(new discord.RichEmbed()
-                .setColor(0x5eecff)
-                .setTitle("Command: deactivate")
-                .setDescription("Logging has been deactivated!"));
-            break;
-
         //Shows all messages mapped to the senders user id
         case "seelog":
             var output = userMap.toString(message.author.id);
@@ -120,6 +84,47 @@ function commandCheck(message, command, args) {
                     .setColor(0xff6860)
                 );
             }
+            break;
+
+        //------------------- lEADERBOARD FUNCTIONS -------------------
+        case "leaderboard":
+            leaderBoard.generate(message.guild.members);
+        
+        //------------------- BOT FUNCTIONS -------------------
+        //Log all messages that aren't recognized commands
+        default:
+            //console.log(message);
+            userMap.add(message)
+            break;
+
+        //Show logging status
+        case "status":
+            var myInfo = new discord.RichEmbed()
+                .setTitle("Bot Status")
+            if (logging) {
+                myInfo.setColor(0x47ff96)
+                myInfo.setDescription("Logging is currently active");
+            } else {
+                myInfo.setColor(0xff6860)
+                myInfo.setDescription("Logging is currently inactive")
+            }
+            message.channel.send(myInfo);
+            break;
+        //Enable logging
+        case "activate":
+            logging = true;
+            message.channel.send(new discord.RichEmbed()
+                .setColor(0x5eecff)
+                .setTitle("Command: activate")
+                .setDescription("Logging is now active!"));
+            break;
+        //Disable logging
+        case "deactivate":
+            logging = false;
+            message.channel.send(new discord.RichEmbed()
+                .setColor(0x5eecff)
+                .setTitle("Command: deactivate")
+                .setDescription("Logging has been deactivated!"));
             break;
     }
 }

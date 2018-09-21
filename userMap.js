@@ -69,11 +69,11 @@ module.exports = {
         }
     },
     updateAllScores: function() {
-        var iterator = userMap.keys();
-        while(!iterator.next()) {
-            console.log(iterator.value);
-            this.updateUserScore(iterator.value);
-        }
+        let keys = Array.from(userMap.keys() );
+        keys.forEach(function (key, index) {
+            console.log(key);
+            updateUserScore(key);
+        });
     },
     clearUser: function (id) {
         userMap.delete(id);
@@ -103,6 +103,9 @@ module.exports = {
     score: function (id) {
         newUserCheck(id);
         return userMap.get(id).score;
+    },
+    getKeys: function() {
+        return userMap.keys();
     }
 };
 
