@@ -1,5 +1,6 @@
 {
     "token" : "NDgwNTk1ODAxODY5OTEwMDE2.Dlygwg.jY6svFrjJzk5rqiQrxEq_6bwoe8",
+    "botid" : "480595801869910016",
     "prefix" : "$",
     "filters" : ["$", "!"],
     "autopayThreshold" : 5
