@@ -4,17 +4,7 @@ const userMap = require("./userMap");
 const leaderBoard = require("./leaderBoard");
 
 const bot = new discord.Client();
-var logging = true;
-
-bot.on("ready", () => {
-    bot.user.setStatus("availible")
-    bot.user.setPresence({
-        game: {
-            name: 'the numbers game'
-        }
-    })
-    console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
-})
+let logging = true;
 
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
@@ -41,7 +31,7 @@ function commandCheck(message, command, args) {
             break;
         //Shows all messages mapped to the senders user id
         case "seelog":
-            var output = userMap.toString(message.author.id);
+            let output = userMap.toString(message.author.id);
             if (output === null) {
                 message.channel.send(new discord.RichEmbed()
                     .setColor(0x5eecff)
@@ -88,7 +78,7 @@ function commandCheck(message, command, args) {
 
         //------------------- lEADERBOARD FUNCTIONS -------------------
         case "leaderboard":
-            leaderBoard.generate(message.guild.members);
+            leaderBoard.generate(message.guild.id,message.guild.members);
             break;
         
         //------------------- BOT FUNCTIONS -------------------
@@ -100,7 +90,7 @@ function commandCheck(message, command, args) {
 
         //Show logging status
         case "status":
-            var myInfo = new discord.RichEmbed()
+            let myInfo = new discord.RichEmbed()
                 .setTitle("Bot Status")
             if (logging) {
                 myInfo.setColor(0x47ff96)
@@ -133,7 +123,7 @@ function commandCheck(message, command, args) {
 //Runs updateUserScore and outputs the result, also runs checks on edge cases since 
 //this function can be called in some edge cases
 function payout(message) {
-    var id = message.author.id;
+    let id = message.author.id;
     const prevScore = userMap.prevscore(id);
 
     if (!userMap.updateUserScore(id)) {
@@ -143,7 +133,7 @@ function payout(message) {
             .addField("Your score:", 0 + " (increased by 0 points from 0)"));
         return;
     } else {
-        var currScore = userMap.score(id);
+        let currScore = userMap.score(id);
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
@@ -153,5 +143,21 @@ function payout(message) {
         userMap.shiftscore(id);
     }
 }
+
+bot.on("ready", () => {
+    bot.user.setStatus("availible")
+    bot.user.setPresence({
+        game: {
+            name: 'the numbers game'
+        }
+    })
+    console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
+})
+
+bot.on("disconnected", function () {
+    // alert the console
+    console.log("Discord connection lost");
+    process.exit(1);
+});
 
 bot.login(config.token);

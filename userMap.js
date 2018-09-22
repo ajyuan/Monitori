@@ -23,7 +23,7 @@ module.exports = {
         if (message.content === "") {
             return;
         }
-        for (var i = 0; i < config.filters.length; i++) {
+        for (let i = 0; i < config.filters.length; i++) {
             if (message.content.charAt(0) === config.filters[i]) {
                 return;
             }
@@ -45,6 +45,13 @@ module.exports = {
     updateUserScore: function (id) {
         return pay(id);
     },
+    updateMemberScores: function (ids) {
+        ids.tap(user => {
+            if (user.id !== config.botid) {
+                pay(user.id);
+            }
+        });
+    },
     updateAllScores: function () {
         let keys = Array.from(userMap.keys());
         keys.forEach(function (key, index) {
@@ -64,7 +71,7 @@ module.exports = {
     },
     shiftscore: function (id) {
         newUserCheck(id);
-        var User = userMap.get(id);
+        let User = userMap.get(id);
         User.prevscore = User.score;
     },
 
@@ -82,12 +89,12 @@ module.exports = {
         if (userMap.get(id) === undefined) {
             return null;
         }
-        var userLog = userMap.get(id).messages;
+        let userLog = userMap.get(id).messages;
         if (userLog === null || userLog.length === 0) {
             return null;
         }
         userLog.resetCursor();
-        var output = "";
+        let output = "";
         while (userLog.next()) {
             output += userLog.current;
             output += "\n";
@@ -104,17 +111,17 @@ module.exports = {
 function newUserCheck(id) {
     if (!userMap.has(id)) {
         console.log("Created new user for " + id);
-        var messages = new LinkedList();
-        var newUser = new User(messages);
+        let messages = new LinkedList();
+        let newUser = new User(messages);
         userMap.set(id, newUser);
     }
 }
 
 function pay(id) {
     newUserCheck(id);
-    var User = userMap.get(id);
-    var messagesProcessed = 0;
-    var adjustment = 0;
+    let User = userMap.get(id);
+    let messagesProcessed = 0;
+    let adjustment = 0;
 
     User.messages.resetCursor();
     while (User.messages.next()) {
