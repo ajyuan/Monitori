@@ -130,7 +130,8 @@ function payout(message) {
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
-            .addField("Your score:", 0 + " (increased by 0 points from 0)"));
+            .addField("Your score:", 
+            "0 (increased by 0 points from 0)"));
         return;
     } else {
         let currScore = userMap.score(id);
@@ -151,6 +152,13 @@ bot.on("ready", () => {
             name: 'the numbers game'
         }
     })
+
+    //Alert user if bot has been misconfigured, exit
+    if (config.awardThreshold.length !== config.awardAmount.length) {
+        console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
+        process.exit(1);
+    }
+
     console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 

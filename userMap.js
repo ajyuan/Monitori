@@ -2,10 +2,13 @@ const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
 const config = require("./config.json");
 const userMap = new Map();
+var awardThreshold = config.awardThreshold;
+var awardAmount = config.awardAmount;
 
 //This is the User object that each user id maps to
 class User {
     constructor(messageLog) {
+        this.points = 0;
         this.score = 0;
         this.prevscore = 0;
         this.totalMessages = 0;
@@ -37,6 +40,9 @@ module.exports = {
             console.log(message.author + " was automatically paid")
         }
     },
+    idCheck: function (id) {
+        newUserCheck (id);
+    },
     // ------------------ SCORE FUNCTIONS ---------------------------
     /*
     Calculates and updates the sentiment score of a user
@@ -60,6 +66,10 @@ module.exports = {
                 pay(key);
             }
         });
+    },
+    points: function (id) {
+        newUserCheck(id);
+        return userMap.get(id).points;
     },
     score: function (id) {
         newUserCheck(id);
@@ -125,6 +135,10 @@ function pay(id) {
 
     User.messages.resetCursor();
     while (User.messages.next()) {
+        //Rewards one point per message if dynamic points is disabled
+        if (!config.dynamicPoints) {
+            User.points ++;
+        }
         /*
         Because most sentenances may not be easily identified as positive or negative sentiment,
         we will automatically filter out statements with relatively low compound scores
@@ -139,6 +153,17 @@ function pay(id) {
         User.messages = new LinkedList();
         return false;
     } else {
+        //Calculate dynamic points
+        const balancedAdjustment = adjustment / messagesProcessed;
+        if (balancedAdjustment > awardThreshold[0] && config.dynamicPoints) {
+            for (let i = awardThreshold.length-1; i <= 0; i--) {
+                if(balancedAdjustment >= awardThreshold[i]) {
+                    User.points += messagesProcessed * awardAmount[i];
+                }
+            }
+        }
+
+        //Update user statistics and clears the user's message queue
         User.score = ((User.score * User.totalMessages) + adjustment) / (User.totalMessages + messagesProcessed);
         User.score = Math.round(User.score * 1000) / 1000;
         User.messages = new LinkedList();
