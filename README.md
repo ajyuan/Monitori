@@ -1,6 +1,5 @@
 # About
 Hello, my name is Monitori! <br />
-<br />
 I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase
 user engagement while encouraging positivity and rewarding server members for saying nice things :D
 
@@ -11,7 +10,7 @@ user engagement while encouraging positivity and rewarding server members for sa
 
 # Configuration
 **token:** This is Monitori's login token <br />
-**botid:** This is the Monitori's user id. It's used for ignoring bot messages in userMap.
+**botid:** This is the Monitori's user id. It's used for ignoring bot messages in userMap. <br />
 **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori <br />
 **filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
 **autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages.
