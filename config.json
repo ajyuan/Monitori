@@ -3,5 +3,11 @@
     "botid" : "480595801869910016",
     "prefix" : "$",
     "filters" : ["$", "!"],
-    "autopayThreshold" : 5
+
+    "dynamicPoints" : true,
+    "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
+    "awardAmount" : [1, 2, 4, 6, 7],
+
+    "autopayThreshold" : 5,
+    "sortThreshold" : 3
 }
