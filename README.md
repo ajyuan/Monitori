@@ -1,18 +1,21 @@
 # About
-Hello, my name is Monitori!
+Hello, my name is Monitori! <br />
+<br />
 I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase
-user engagement while encouraging positivity and reward server members for saying nice things :D
+user engagement while encouraging positivity and rewarding server members for saying nice things :D
 
 # Features
 * Message caching system for logging and adaptive score calculation
 * Credit system for rewarding users who consistently express positive sentiment
-* Leaderboard system for most positive users in a given server
+* Leaderboard system to remind members who the most positive users in the server are :p
 
 # Configuration
-**prefix:** Sets the character that commands must be preceded by. Ex:($status, prefix = $, command = status) <br />
-**filters:** Bot will ignore any messages with these prefixes. This is useful for ignoring bot commands, etc. <br />
-**autopayThreshold:** Bot will automatically process all messages in a user's log after it reaches this number of messages.
-Set to 0 to disable. Users will instead have their scores updated when the $score function is run. <br />
+**token:** This is Monitori's login token <br />
+**botid:** This is the Monitori's user id. It's used for ignoring bot messages in userMap.
+**prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori <br />
+**filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
+**autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages.
+Set to 0 to disable (score must be manually calculated using $score or $refresh) <br />
 
 # How I work 
 To determine the sentiment of users, I generate a log of all messages written a server and map them to their 
