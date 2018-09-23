@@ -6,7 +6,7 @@ I'm a sentiment analysis bot built for a social/messaging platform called Discor
 * Message caching system for adaptive score calculation and more accurate sentiment analysis
 * Automatic garbage collection for inactive users to reduce memory usage
 * Dynamic credit system that rewards users based on the sentiment rating of their messages
-* Leaderboard system to remind members who the most positive users in the server are :p
+* Detailed leaderboard system (to remind members who the most positive users in the server are :p)
 
 # How I work 
 To determine the sentiment of users, I generate a log of all messages written a server and map them to their respective users. This can be switched on and off using the $activate and $deactivate commands, respectively. 
@@ -28,6 +28,9 @@ section.
 **filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
 **dynamicPoints** Enables or disables Monitori's seniment based point system, which rewards points dynamically based on the determined sentiment of a user's messages. Disable to have points rewarded purely on a message volume basis. (1pt awarded for every message sent). <br />
 **awardThreshold** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
-**awardAmount** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold*
+**awardAmount** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold* <br />
 **autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages. Higher threshold is recommended for more accurate seniment analysis. Lower threshold is recommended if you want to reduce memory usage. Set to 0 to disable (score must be manually calculated using $score or $refresh). <br />
 **sortThreshold** This number defines the guild size at which Monitori will switch from Insertion Sort to Merge Sort for generating leaderboard. <br />
+
+# Notes
+* While Monitori is capable of analyzing text emoticons, it is not able to analyze emojis. Because of this, it is recommended to disable automatic emoticon to emoji conversion (located in Settings > Text & Images) for best results.
