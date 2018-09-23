@@ -127,6 +127,8 @@ function newUserCheck(id) {
     }
 }
 
+//Processes the message queue associated with a user id
+//Returns false if user has a null score, returns true otherwise
 function pay(id) {
     newUserCheck(id);
     let User = userMap.get(id);
@@ -150,15 +152,16 @@ function pay(id) {
         }
     }
     if (User.totalMessages + messagesProcessed === 0) {
-        User.messages = new LinkedList();
         return false;
     } else {
         //Calculate dynamic points
         const balancedAdjustment = adjustment / messagesProcessed;
         if (balancedAdjustment > awardThreshold[0] && config.dynamicPoints) {
-            for (let i = awardThreshold.length-1; i <= 0; i--) {
+            for (let i = awardThreshold.length-1; i >= 0; i--) {
                 if(balancedAdjustment >= awardThreshold[i]) {
+                    console.log(messagesProcessed * awardAmount[i] + " points awarded")
                     User.points += messagesProcessed * awardAmount[i];
+                    break;
                 }
             }
         }

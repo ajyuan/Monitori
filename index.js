@@ -23,6 +23,7 @@ function commandCheck(message, command, args) {
     switch (command) {
         //------------------- USERMAP FUNCTIONS -------------------
         //Calculate a user's score
+        case "points":
         case "score":
             payout(message);
             break;
@@ -130,17 +131,19 @@ function payout(message) {
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
-            .addField("Your score:", 
-            "0 (increased by 0 points from 0)"));
+            .addField("Points:", "0 pts")
+            .addField("Sentiment rating:", 
+            "0 (increased by 0 from 0)"));
         return;
     } else {
         let currScore = userMap.score(id);
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
             .setTitle("Command: score")
-            .addField("Your score:",
+            .addField("Points:", userMap.points(id) + " pts")
+            .addField("Sentiment rating:",
                 (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")
-                + Math.abs(currScore - prevScore) + " points from " + Math.round(prevScore * 1000) / 1000 + ")"));
+                + Math.abs(currScore - prevScore) + " from " + Math.round(prevScore * 1000) / 1000 + ")"));
         userMap.shiftscore(id);
     }
 }

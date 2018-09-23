@@ -15,7 +15,7 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 section.
 
 # Files
-**Index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
+**index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
 **userMap.js** The main file acts as the main database for storing information about each discord user. It maps the ID of every discord user to a user class, which stores information such as current score, total messages, and queued messages to be processed. Information stored in here is global, meaning user statistics will be preserved across guilds. <br />
 **leaderBoard.js** This file contains the ranking system for each guild Monitori serves. It maps the guild id of each server to an array of user IDs, which are sorted from highest score to lowest using Merge Sort. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). <br />
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
