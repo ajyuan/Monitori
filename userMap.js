@@ -40,17 +40,21 @@ module.exports = {
             console.log(message.author + " was automatically paid")
         }
     },
+    //Checks if a user with this id exists in the userMap
+    //If it doesn't, create one
     idCheck: function (id) {
         newUserCheck (id);
     },
     // ------------------ SCORE FUNCTIONS ---------------------------
-    /*
-    Calculates and updates the sentiment score of a user
-    Returns true if elligable messages to process were found, returns false otherwise
-    */
+    
+    //Calculates and updates the sentiment score of a user
+    //Returns true if elligable messages to process were found, returns false otherwise
     updateUserScore: function (id) {
         return pay(id);
     },
+    //Calculates and updates the sentiment scores of a given collection of users
+    //Mainly used for updating scores of a specific server instead of the entire map
+    //Returns true if elligable messages to process were found, returns false otherwise
     updateMemberScores: function (ids) {
         ids.tap(user => {
             if (user.id !== config.botid) {
@@ -58,6 +62,8 @@ module.exports = {
             }
         });
     },
+    //Calculates and updates the sentiment scores of every user the bot serves
+    //Returns true if elligable messages to process were found, returns false otherwise
     updateAllScores: function () {
         let keys = Array.from(userMap.keys());
         keys.forEach(function (key, index) {
@@ -67,18 +73,23 @@ module.exports = {
             }
         });
     },
+    //Returns a User's points
     points: function (id) {
         newUserCheck(id);
         return userMap.get(id).points;
     },
+    //Returns a User's current score
     score: function (id) {
         newUserCheck(id);
         return userMap.get(id).score;
     },
+    //Returns a User's previous score
     prevscore: function (id) {
         newUserCheck(id);
         return userMap.get(id).prevscore;
     },
+    //Discards a User's prevScore value and replaces it with it's current score value
+    //Used for displaying a user's score change since last payout
     shiftscore: function (id) {
         newUserCheck(id);
         let User = userMap.get(id);
@@ -86,16 +97,20 @@ module.exports = {
     },
 
     // ----------------- DATA FUNCTIONS ---------------------------
+    //Removes a user from the usermap
     clearUser: function (id) {
         userMap.delete(id);
     },
+    //Clears the entire usermap
     clearAll: function () {
         userMap.clear();
     },
+    //Returns true if a user exists in the usermap, returns false otherwise
     userExists: function (id) {
         return userMap.has(id);
     },
-    toString: function (id) {
+    //Creates a string representation of a user's message queue
+    messagesToString: function (id) {
         if (userMap.get(id) === undefined) {
             return null;
         }
@@ -111,6 +126,7 @@ module.exports = {
         }
         return output;
     },
+    //Returns a collection of all userIDs in the bot's userMap
     getKeys: function () {
         return userMap.keys();
     }
@@ -141,7 +157,9 @@ function pay(id) {
         if (!config.dynamicPoints) {
             User.points ++;
         }
+
         /*
+        Calculates cumulative sentiment of all messages in message queue
         Because most sentenances may not be easily identified as positive or negative sentiment,
         we will automatically filter out statements with relatively low compound scores
         to preserve consistency
@@ -156,7 +174,7 @@ function pay(id) {
     } else {
         //Calculate dynamic points
         const balancedAdjustment = adjustment / messagesProcessed;
-        if (balancedAdjustment > awardThreshold[0] && config.dynamicPoints) {
+        if (config.dynamicPoints && balancedAdjustment > awardThreshold[0]) {
             for (let i = awardThreshold.length-1; i >= 0; i--) {
                 if(balancedAdjustment >= awardThreshold[i]) {
                     console.log(messagesProcessed * awardAmount[i] + " points awarded")

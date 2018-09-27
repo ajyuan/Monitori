@@ -32,7 +32,7 @@ function commandCheck(message, command, args) {
             break;
         //Shows all messages mapped to the senders user id
         case "seelog":
-            let output = userMap.toString(message.author.id);
+            let output = userMap.messagesToString(message.author.id);
             if (output === null) {
                 message.channel.send(new discord.RichEmbed()
                     .setColor(0x5eecff)
@@ -48,7 +48,8 @@ function commandCheck(message, command, args) {
             break;
         //Clears a user's log if argument = user, clears everyone's log if "all" is given as argument
         case "clearlog":
-            if (args[0] == "null") {
+            //Require scope argument if none is given
+            if (args[0] == null) {
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Clearlog error")
                     .setDescription("Proper usage: clearlog <scope>")
@@ -79,9 +80,19 @@ function commandCheck(message, command, args) {
 
         //------------------- lEADERBOARD FUNCTIONS -------------------
         case "leaderboard":
-            leaderBoard.generate(message.guild.id,message.guild.members);
+            if (args[0] == null || args[0] == "points") {
+                leaderBoard.generate(message.guild, "points");
+            } else if (args[0] == "positivity" || args[0] == "score") {
+                leaderBoard.generate(message.guild, "score");
+            } else {
+                message.channel.send(new discord.RichEmbed()
+                    .setTitle("Leaderboard error")
+                    .setDescription("Error: please define a valid scope. Options: <points, positivity>")
+                    .setColor(0xff6860)
+                );
+            }
             break;
-        
+
         //------------------- BOT FUNCTIONS -------------------
         //Log all messages that aren't recognized commands
         default:
@@ -132,8 +143,8 @@ function payout(message) {
             .setColor(0x5eecff)
             .setTitle("Command: score")
             .addField("Points:", "0 pts")
-            .addField("Sentiment rating:", 
-            "0 (increased by 0 from 0)"));
+            .addField("Sentiment rating:",
+                "0 (increased by 0 from 0)"));
         return;
     } else {
         let currScore = userMap.score(id);
@@ -161,8 +172,8 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
-
-    console.log(`SABOT is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
+    leaderBoard.init(bot);
+    console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
 bot.on("disconnected", function () {
