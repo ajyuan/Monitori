@@ -81,9 +81,17 @@ function commandCheck(message, command, args) {
         //------------------- lEADERBOARD FUNCTIONS -------------------
         case "leaderboard":
             if (args[0] == null || args[0] == "points") {
-                leaderBoard.generate(message.guild, "points");
+                message.channel.send(new discord.RichEmbed()
+                    .setTitle("Points Leaderboard")
+                    .setDescription(leaderBoard.generate(message.guild, "points"))
+                    .setColor(0x5eecff)
+                );
             } else if (args[0] == "positivity" || args[0] == "score") {
-                leaderBoard.generate(message.guild, "score");
+                message.channel.send(new discord.RichEmbed()
+                    .setTitle("Score Leaderboard")
+                    .setDescription(leaderBoard.generate(message.guild, "score"))
+                    .setColor(0x5eecff)
+                );
             } else {
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Leaderboard error")
