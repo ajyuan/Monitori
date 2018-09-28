@@ -3,7 +3,6 @@ const config = require("./config.json");
 const index = require("./index");
 const guildMap = new Map();
 
-var type;
 var bot;
 
 class Guild {
@@ -17,8 +16,10 @@ module.exports = {
     init: function (client) {
         bot = client;
     },
-    //Creates a leaderboard for a guildID if none exists, updates it if it does
-    //Returns a formatted string of users to be printed by bot
+    /*
+    Creates a leaderboard for a guildID if none exists, updates it if it does
+    Returns a formatted string of users to be printed by bot
+    */
     generate: function (guild, type) {
         var output = "";
         guildID = guild.id;
@@ -34,7 +35,6 @@ module.exports = {
             }
         });
 
-        //if (!guildMap.has(guildID)) {
         let createdGuild = new Guild();
         createdGuild.pointsBoard = newBoard(members, type);
 
@@ -45,7 +45,6 @@ module.exports = {
         }
         guildMap.set(guildID, createdGuild);
         return output;
-        //} else {}
     }
 }
 
@@ -64,7 +63,7 @@ function newBoard(members, type) {
 function insertionSort(members, type) {
     for (var i = 0; i < members.length; i++) {
         let current = members[i];
-        for (var j = i - 1; j > -1 && valueGetter(type, members[j]) > valueGetter(type, current); j--) {
+        for (var j = i - 1; j > -1 && valueGetter(type, members[j]) < valueGetter(type, current); j--) {
             console.log(valueGetter(type, members[j]) + " is greater than " + valueGetter(type, current));
             members[j + 1] = members[j];
         }
