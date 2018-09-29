@@ -9,5 +9,5 @@
     "awardAmount" : [1, 2, 4, 6, 7],
 
     "autopayThreshold" : 5,
-    "sortThreshold" : 20
+    "sortThreshold" : 1
 }

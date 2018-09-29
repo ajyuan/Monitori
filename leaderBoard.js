@@ -55,21 +55,55 @@ function newBoard(members, type) {
         return insertionSort(members, type);
     } else {
         console.log("Guild has " + members.length + " active members, using merge sort!");
+        return mergeSort(members, type);
     }
 }
 
-//Given an array of userIDs and a type, this function will sort the userIDs by the given type
-//Ex. if type === "points", sort the users by their points
+/*
+Sorting Algorithms -----
+Given an array of userIDs and a type, these functions will return a sorted array of userIDs by
+a given type
+Ex. if type === "points", sort the users by their points
+*/
 function insertionSort(members, type) {
-    for (var i = 0; i < members.length; i++) {
+    for (var i = 1; i < members.length; i++) {
         let current = members[i];
-        for (var j = i - 1; j > -1 && valueGetter(type, members[j]) < valueGetter(type, current); j--) {
-            console.log(valueGetter(type, members[j]) + " is greater than " + valueGetter(type, current));
+        for (var j = i - 1; j >= 0 && valueGetter(type, members[j]) < valueGetter(type, current); j--) {
+            //console.log(valueGetter(type, members[j]) + " is greater than " + valueGetter(type, current));
             members[j + 1] = members[j];
         }
         members[j + 1] = current;
     }
     return members;
+}
+
+function mergeSort(members, type) {
+    /*for (i = 0; i < members.length; i ++) {
+        console.log("Current subarray: " + members[i]);
+    }*/
+    if (members.length <= 1) {
+        return members;
+    } else {
+        const mid = members.length/2;
+        const first = members.slice(0, mid);
+        const last = members.slice(mid);
+        return merge(mergeSort(first), mergeSort(last), type);
+    }
+}
+function merge(first, last, type) {
+    let output = [];
+    let firstIndex = 0;
+    let lastIndex = 0;
+    while (firstIndex < first.length && lastIndex < last.length) {
+        if (valueGetter(type, first) < valueGetter(type, last)) {
+            output.push(first[firstIndex]);
+            firstIndex++;
+        } else {
+            output.push(last[lastIndex]);
+            lastIndex++;
+        }
+    }
+    return output.concat(first.slice(firstIndex)).concat(last.slice(lastIndex));
 }
 
 //Helper function that returns the appropriate value given the type of leaderboard requested
