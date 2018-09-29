@@ -1,2 +1,1 @@
-* Fix mergesort rerun after leaderboard has been generated 
 * Dynamic message queue processing (Process message queue for a user when it detects a conversation has ended)
