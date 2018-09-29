@@ -1,6 +1,5 @@
 const userMap = require("./userMap");
 const config = require("./config.json");
-const index = require("./index");
 const guildMap = new Map();
 
 var bot;
@@ -41,7 +40,6 @@ module.exports = {
         for (var i = 0; i < createdGuild.pointsBoard.length; i++) {
             output += "**" + bot.users.get(createdGuild.pointsBoard[i]).username
                 + "** | " + valueGetter(type,createdGuild.pointsBoard[i]) + " pts\n";
-            //console.log("out: " + output);
         }
         guildMap.set(guildID, createdGuild);
         return output;
@@ -95,10 +93,12 @@ function merge(first, last, type) {
     let firstIndex = 0;
     let lastIndex = 0;
     while (firstIndex < first.length && lastIndex < last.length) {
-        if (valueGetter(type, first) < valueGetter(type, last)) {
+        if (valueGetter(type, first[firstIndex]) > valueGetter(type, last[lastIndex])) {
+            console.log(first[firstIndex]);
             output.push(first[firstIndex]);
             firstIndex++;
         } else {
+            console.log(last[lastIndex]);
             output.push(last[lastIndex]);
             lastIndex++;
         }
@@ -112,5 +112,8 @@ function valueGetter(type, member) {
         return userMap.points(member);
     } else if (type === "score") {
         return userMap.score(member);
+    } else {
+        console.log("leaderBoard error: valueGetter given incorrect type argument");
+        process.exit(1);
     }
 }
