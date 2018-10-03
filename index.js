@@ -167,6 +167,14 @@ function payout(message) {
     }
 }
 
+bot.on("guildMemberAdd", (member) => {
+    
+})
+
+bot.on("guildMemberRemove", (member) => {
+    
+})
+
 bot.on("ready", () => {
     bot.user.setStatus("availible")
     bot.user.setPresence({

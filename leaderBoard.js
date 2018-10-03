@@ -6,6 +6,7 @@ var bot;
 
 class Guild {
     constructor() {
+        this.userListModified = false;
         this.pointsBoard = null;
         this.scoreBoard = null;
     }
@@ -22,9 +23,10 @@ module.exports = {
     generate: function (guild, type) {
         var output = "";
         guildID = guild.id;
-        ids = guild.members;
         console.log("Generating leaderboard for guild: " + guildID);
         var members = [];
+
+        ids = guild.members;
 
         //Update scores for all users in a guild
         ids.tap(user => {
@@ -35,14 +37,34 @@ module.exports = {
         });
 
         let createdGuild = new Guild();
-        createdGuild.pointsBoard = newBoard(members, type);
+        let currentBoard;
 
-        for (var i = 0; i < createdGuild.pointsBoard.length; i++) {
-            output += "**" + bot.users.get(createdGuild.pointsBoard[i]).username
-                + "** | " + valueGetter(type,createdGuild.pointsBoard[i]) + " pts\n";
+        //Sets current board to be edited
+        if (type === "points") {
+            currentBoard = createdGuild.pointsBoard;
+        } else if (type === "score") {
+            currentBoard = createdGuild.scoreBoard;
         }
+        currentBoard = newBoard(members, type);
+
+        for (var i = 0; i < currentBoard.length; i++) {
+            output += "**" + bot.users.get(currentBoard[i]).username
+                + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
+        }
+        createdGuild.userListModified = false;
         guildMap.set(guildID, createdGuild);
         return output;
+    },
+    //Notifies ADT that guild leaderboard has a change in member list, and needs to have
+    //leaderboard regenerated
+    flag: function (guildID) {
+        if (!guildMap.has(guildID)) {
+            console.log("Flag error: Attempted to flag guild that has not been mapped");
+            process.exit(1);
+        } else {
+            console.log("Guild " + guildID + " flagged");
+            guildMap.get(guildID).userListModified = true;
+        }
     }
 }
 
@@ -82,7 +104,7 @@ function mergeSort(members, type) {
     if (members.length <= 1) {
         return members;
     } else {
-        const mid = members.length/2;
+        const mid = members.length / 2;
         const first = members.slice(0, mid);
         const last = members.slice(mid);
         return merge(mergeSort(first), mergeSort(last), type);
