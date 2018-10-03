@@ -28,7 +28,7 @@ module.exports = {
 
         ids = guild.members;
 
-        //Update scores for all users in a guild
+        //Update scores for all users in a guild and adds them to be sorted
         ids.tap(user => {
             if (userMap.userExists(user.id)) {
                 userMap.updateUserScore(user.id);
@@ -61,10 +61,9 @@ module.exports = {
         if (!guildMap.has(guildID)) {
             console.log("Flag error: Attempted to flag guild that has not been mapped");
             process.exit(1);
-        } else {
-            console.log("Guild " + guildID + " flagged");
-            guildMap.get(guildID).userListModified = true;
         }
+        console.log("Member list change detected on guild " + guildID);
+        guildMap.get(guildID).userListModified = true;
     }
 }
 

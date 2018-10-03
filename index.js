@@ -168,11 +168,11 @@ function payout(message) {
 }
 
 bot.on("guildMemberAdd", (member) => {
-    
+    leaderBoard.flag(member.guild.id);
 })
 
 bot.on("guildMemberRemove", (member) => {
-    
+    leaderBoard.flag(member.guild.id);
 })
 
 bot.on("ready", () => {
