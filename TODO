@@ -1,1 +1,2 @@
+* Improve leaderboard generation to use previously sorted array if no member changes
 * Dynamic message queue processing (Process message queue for a user when it detects a conversation has ended)
