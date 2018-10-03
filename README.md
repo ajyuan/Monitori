@@ -15,8 +15,8 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 
 # Files
 **index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
-**userMap.js** The main file acts as the main database for storing information about each discord user. It maps the ID of every discord user to a user class, which stores information such as current score, total messages, and queued messages to be processed. Information stored in here is global, meaning user statistics will be preserved across guilds. <br />
-**leaderBoard.js** This file contains the ranking system for each guild Monitori serves. It maps the guild id of each server to an array of user IDs, which are sorted from highest score to lowest using Merge Sort. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). <br />
+**userMap.js** The main file acts as the main database for storing information about each discord user. It maps the ID of every discord user to a user class, which stores important user information such as score history. points, and total messages. This file also holds the bot's message cache, since messages must be mapped to each user. Information stored in here is global, meaning user statistics will be preserved across guilds. <br />
+**leaderBoard.js** This file contains the ranking system for each guild Monitori serves. It maps the guild id of each server to an array of user IDs, which are sorted from highest score to lowest using Merge Sort. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). This file also houses the bots sorting algorithms and guild classes.<br />
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
 
@@ -25,11 +25,11 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **botid:** This is the Monitori's user id. It's used for ignoring bot messages in userMap. <br />
 **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori. <br />
 **filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
-**dynamicPoints** Enables or disables Monitori's seniment based point system, which rewards points dynamically based on the determined sentiment of a user's messages. Disable to have points rewarded purely on a message volume basis. (1pt awarded for every message sent). <br />
-**awardThreshold** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
-**awardAmount** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold* <br />
+**dynamicPoints:** Enables or disables Monitori's seniment based point system, which rewards points dynamically based on the determined sentiment of a user's messages. Disable to have points rewarded purely on a message volume basis. (1pt awarded for every message sent). <br />
+**awardThreshold:** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
+**awardAmount:** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold* <br />
 **autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages. Higher threshold is recommended for more accurate seniment analysis. Lower threshold is recommended if you want to reduce memory usage. Set to 0 to disable (score must be manually calculated using $score or $refresh). <br />
-**sortThreshold** This number defines the guild size at which Monitori will switch from Insertion Sort to Merge Sort for generating leaderboard. <br />
+**sortThreshold:** This number defines the guild size at which Monitori will switch from Insertion Sort to Merge Sort for generating leaderboard. <br />
 
 # Notes
 * While Monitori is capable of analyzing text emoticons, it is not able to analyze emojis. Because of this, it is recommended to disable automatic emoticon to emoji conversion (located in Settings > Text & Images) for best results.
