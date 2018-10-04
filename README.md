@@ -19,10 +19,9 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **leaderBoard.js** This file contains the ranking system for each guild Monitori serves. It maps the guild id of each server to an array of user IDs, which are sorted from highest score to lowest using Merge Sort. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). This file also houses the bots sorting algorithms and guild classes.<br />
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
-
 # Configuration
-**token:** This is Monitori's login token. <br />
-**botid:** This is the Monitori's user id. It's used for ignoring bot messages in userMap. <br />
+**token:** This is Monitori's login token. It's a secret :p <br />
+**botid:** This is the Monitori's user id. It's used for ignoring bot messages. <br />
 **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori. <br />
 **filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
 **dynamicPoints:** Enables or disables Monitori's seniment based point system, which rewards points dynamically based on the determined sentiment of a user's messages. Disable to have points rewarded purely on a message volume basis. (1pt awarded for every message sent). <br />
