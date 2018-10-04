@@ -48,7 +48,7 @@ module.exports = {
                 process.exit(1);
             }
             let currentID;
-            while(ids.length != 0) {
+            while (ids.length != 0) {
                 currentID = ids.pop()
                 userMap.updateUserScore(currentID);
                 members.push(currentID);
@@ -62,8 +62,10 @@ module.exports = {
 
         //Generates the string representation of the leaderboard
         for (var i = 0; i < currentBoard.length; i++) {
-            output += "**" + bot.users.get(currentBoard[i]).username
-                + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
+            if (currentBoard[i] !== config.botid) {
+                output += "**" + bot.users.get(currentBoard[i]).username
+                    + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
+            }
         }
 
         if (type === "points") {
