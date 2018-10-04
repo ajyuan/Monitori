@@ -163,7 +163,7 @@ function payout(message) {
             .addField("Sentiment rating:",
                 (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")
                 + Math.abs(currScore - prevScore) + " from " + Math.round(prevScore * 1000) / 1000 + ")"));
-        userMap.shiftscore(id);
+        userMap.shiftScore(id);
     }
 }
 

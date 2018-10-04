@@ -31,8 +31,10 @@ module.exports = {
                 return;
             }
         }
+
         const id = message.author.id;
-        newUserCheck(id); //If a user does not exist in usermap, create a new user
+        //If a user does not exist in usermap, create a new user.
+        newUserCheck(id); 
         userMap.get(id).messages.push(message.content);  //Inserts the message
 
         if (config.autopay > 0 && userMap.get(id).messages.length >= config.autopayThreshold) {
@@ -90,7 +92,7 @@ module.exports = {
     },
     //Discards a User's prevScore value and replaces it with it's current score value
     //Used for displaying a user's score change since last payout
-    shiftscore: function (id) {
+    shiftScore: function (id) {
         newUserCheck(id);
         let User = userMap.get(id);
         User.prevscore = User.score;

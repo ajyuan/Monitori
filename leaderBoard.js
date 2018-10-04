@@ -25,32 +25,53 @@ module.exports = {
         guildID = guild.id;
         console.log("Generating leaderboard for guild: " + guildID);
         var members = [];
+        var ids = [];
 
-        ids = guild.members;
-
-        //Update scores for all users in a guild and adds them to be sorted
-        ids.tap(user => {
-            if (userMap.userExists(user.id)) {
+        if (!guildMap.has(guildID) || guildMap.get(guildID).userListModified) {
+            console.log("Member list outdated, regenerating");
+            guild.members.tap(user => {
+                userMap.idCheck(user.id);
                 userMap.updateUserScore(user.id);
                 members.push(user.id);
+            });
+        } else {
+            if (type === "points") {
+                ids = guildMap.get(guildID).pointsBoard;
+            } else if (type === "score") {
+                ids = guildMap.get(guildID).scoreBoard;
+            } else {
+                console.log("Leaderboard generation error: Type not specified");
+                process.exit(1);
             }
-        });
+            if (ids === null) {
+                console.log("Leaderboard generation error: Guild leaderboard null");
+                process.exit(1);
+            }
+            let currentID;
+            while(ids.length != 0) {
+                currentID = ids.pop()
+                userMap.updateUserScore(currentID);
+                members.push(currentID);
+            }
+        }
 
         let createdGuild = new Guild();
         let currentBoard;
 
-        //Sets current board to be edited
-        if (type === "points") {
-            currentBoard = createdGuild.pointsBoard;
-        } else if (type === "score") {
-            currentBoard = createdGuild.scoreBoard;
-        }
         currentBoard = newBoard(members, type);
 
+        //Generates the string representation of the leaderboard
         for (var i = 0; i < currentBoard.length; i++) {
             output += "**" + bot.users.get(currentBoard[i]).username
                 + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
         }
+
+        if (type === "points") {
+            createdGuild.pointsBoard = currentBoard;
+        } else if (type === "score") {
+            createdGuild.scoreBoard = currentBoard;
+        }
+
         createdGuild.userListModified = false;
         guildMap.set(guildID, createdGuild);
         return output;
