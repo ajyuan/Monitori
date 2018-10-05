@@ -10,6 +10,13 @@ class Guild {
         this.pointsBoard = null;
         this.scoreBoard = null;
     }
+    
+    setTimer(time = 1000) {
+        setTimeout(function run() {
+            console.log("Test");
+            setTimeout(run, time);
+          }, time);
+    }
 }
 
 module.exports = {
@@ -56,6 +63,7 @@ module.exports = {
         }
 
         let createdGuild = new Guild();
+        createdGuild.setTimer();
         let currentBoard = newBoard(members, type);
 
         //Generates the string representation of the leaderboard
