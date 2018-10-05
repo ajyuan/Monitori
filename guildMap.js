@@ -20,7 +20,7 @@ module.exports = {
     Creates a leaderboard for a guildID if none exists, updates it if it does
     Returns a formatted string of users to be printed by bot
     */
-    generate: function (guild, type) {
+    leaderboard: function (guild, type) {
         var output = "";
         guildID = guild.id;
         console.log("Generating leaderboard for guild: " + guildID);
@@ -56,9 +56,7 @@ module.exports = {
         }
 
         let createdGuild = new Guild();
-        let currentBoard;
-
-        currentBoard = newBoard(members, type);
+        let currentBoard = newBoard(members, type);
 
         //Generates the string representation of the leaderboard
         for (var i = 0; i < currentBoard.length; i++) {
@@ -90,7 +88,7 @@ module.exports = {
     }
 }
 
-//Creates a new leaderboard
+//Determines appropriate sort to use and generates a new leaderboard
 function newBoard(members, type) {
     if (members.length < config.sortThreshold) {
         console.log("Guild has " + members.length + " active member(s), using insertion sort!");
