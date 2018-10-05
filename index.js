@@ -1,7 +1,7 @@
 const discord = require("discord.js");
 const config = require("./config.json");
 const userMap = require("./userMap");
-const leaderBoard = require("./leaderBoard");
+const guildMap = require("./guildMap");
 
 const bot = new discord.Client();
 let logging = true;
@@ -83,13 +83,13 @@ function commandCheck(message, command, args) {
             if (args[0] == null || args[0] == "points") {
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Points Leaderboard")
-                    .setDescription(leaderBoard.generate(message.guild, "points"))
+                    .setDescription(guildMap.leaderboard(message.guild, "points"))
                     .setColor(0x5eecff)
                 );
             } else if (args[0] == "positivity" || args[0] == "score") {
                 message.channel.send(new discord.RichEmbed()
                     .setTitle("Score Leaderboard")
-                    .setDescription(leaderBoard.generate(message.guild, "score"))
+                    .setDescription(guildMap.leaderboard(message.guild, "score"))
                     .setColor(0x5eecff)
                 );
             } else {
@@ -168,11 +168,11 @@ function payout(message) {
 }
 
 bot.on("guildMemberAdd", (member) => {
-    leaderBoard.flag(member.guild.id);
+    guildMap.flag(member.guild.id);
 })
 
 bot.on("guildMemberRemove", (member) => {
-    leaderBoard.flag(member.guild.id);
+    guildMap.flag(member.guild.id);
 })
 
 bot.on("ready", () => {
@@ -188,7 +188,7 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
-    leaderBoard.init(bot);
+    guildMap.init(bot);
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
