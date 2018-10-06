@@ -81,14 +81,7 @@ module.exports = {
         }
         createdGuild.userListModified = false;
 
-        //Generates the string representation of the leaderboard
-        for (var i = 0; i < currentBoard.length; i++) {
-            if (currentBoard[i] !== config.botid) {
-                output += "**" + bot.users.get(currentBoard[i]).username
-                    + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
-            }
-        }
-        return output;
+        return boardToString(currentBoard, type);
     },
     //Notifies ADT that guild leaderboard has a change in member list, and needs to have
     //leaderboard regenerated
@@ -119,6 +112,18 @@ function newBoard(members, type) {
         console.log("Guild has " + members.length + " active members, using merge sort!");
         return mergeSort(members, type);
     }
+}
+
+//Generates the string representation of the leaderboard
+function boardToString(currentBoard, type) {
+    var output = ""
+    for (var i = 0; i < currentBoard.length; i++) {
+        if (currentBoard[i] !== config.botid) {
+            output += "**" + bot.users.get(currentBoard[i]).username
+                + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
+        }
+    }
+    return output;
 }
 
 /*
