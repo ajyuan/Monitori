@@ -13,7 +13,9 @@ class Guild {
     }
 
     setTimer(time = config.autopayOnInactivityTime * 1000) {
+        let id = this.id;
         setTimeout(function run() {
+            console.log("Detected guild inactivity at " + id + ", analyzing cache");
             userMap.updateMemberScores(bot.guilds.get(id).members);
             setTimeout(run, time);
         }, time);
@@ -21,18 +23,23 @@ class Guild {
 }
 
 module.exports = {
+    //Passes client used from index.js into guildMap.js
     init: function (client) {
         bot = client;
     },
-    newGuild: function (guildID) {
-        newGuild(guildID)
+    //Allows a new guild to be created given ID
+    add: function (guildID) {
+        newGuild(guildID);
+    },
+
+    remove: function (guildID) {
+        guildMap.remove(guildID);
     },
     /*
     Creates a leaderboard for a guildID if none exists, updates it if it does
     Returns a formatted string of users to be printed by bot
     */
     leaderboard: function (guild, type) {
-        var output = "";
         guildID = guild.id;
         console.log("Generating leaderboard for guild: " + guildID);
         var members = [];
@@ -67,9 +74,8 @@ module.exports = {
         }
 
         let createdGuild;
-        if (guildMap.has(guildID)) {
-            createdGuild = guildMap.get(guildID);
-        } else {
+        createdGuild = guildMap.get(guildID);
+        if (createdGuild === undefined) {
             createdGuild = newGuild(guildID);
         }
         let currentBoard = newBoard(members, type);
@@ -97,6 +103,7 @@ module.exports = {
 
 //Creates a new guild class
 function newGuild(guildID) {
+    console.log("Created new guild for " + guildID);
     let createdGuild = new Guild(guildID);
     createdGuild.setTimer();
     guildMap.set(guildID, createdGuild);
