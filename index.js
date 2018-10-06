@@ -9,7 +9,7 @@ let logging = true;
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
     if (message.author.bot) return;
-    if (message.content.indexOf(config.prefix) !== 0 && !logging) return;
+    if (message.content.indexOf(config.prefix) !== 0) return;
 
     //command processing
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -105,25 +105,29 @@ function commandCheck(message, command, args) {
         //Log all messages that aren't recognized commands
         default:
             //console.log(message);
-            userMap.add(message)
-            break;
+            if (logging) {
+                userMap.add(message)
+                break;
+            }
 
         //Show logging status
         case "status":
             let myInfo = new discord.RichEmbed()
-                .setTitle("Bot Status")
+                .setTitle("Bot Status");
             if (logging) {
-                myInfo.setColor(0x47ff96)
+                myInfo.setColor(0x47ff96);
                 myInfo.setDescription("Logging is currently active");
             } else {
-                myInfo.setColor(0xff6860)
+                myInfo.setColor(0xff6860);
                 myInfo.setDescription("Logging is currently inactive")
             }
             message.channel.send(myInfo);
             break;
         //Enable logging
         case "activate":
-            logging = true;
+            if (args[0] === "global" && message.author.id === config.admin) {
+                logging = true;
+            }
             message.channel.send(new discord.RichEmbed()
                 .setColor(0x5eecff)
                 .setTitle("Command: activate")
@@ -131,7 +135,9 @@ function commandCheck(message, command, args) {
             break;
         //Disable logging
         case "deactivate":
-            logging = false;
+            if (args[0] === "global" && message.author.id === config.admin) {
+                logging = false;
+            }
             message.channel.send(new discord.RichEmbed()
                 .setColor(0x5eecff)
                 .setTitle("Command: deactivate")
@@ -197,5 +203,20 @@ bot.on("disconnected", function () {
     console.log("Discord connection lost");
     process.exit(1);
 });
+
+bot.on("guildCreate", guild => {
+    console.log("Joined a new guild: " + guild.name);
+    guildMap.add(guild.id);
+    message.channel.send(new discord.RichEmbed()
+        .setColor(0x5eecff)
+        .setTitle("Monitori")
+        .setDescription("Hello! My name is Monitori, a sentiment analysis bot for Discord."));
+})
+
+//removed from a server
+bot.on("guildDelete", guild => {
+    console.log("Left a guild: " + guild.name);
+    guildMap.remove(guild.id);
+})
 
 bot.login(config.token);

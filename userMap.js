@@ -179,7 +179,7 @@ function pay(id) {
         if (config.dynamicPoints && balancedAdjustment > awardThreshold[0]) {
             for (let i = awardThreshold.length-1; i >= 0; i--) {
                 if(balancedAdjustment >= awardThreshold[i]) {
-                    console.log(messagesProcessed * awardAmount[i] + " points awarded")
+                    console.log(messagesProcessed * awardAmount[i] + " points awarded to " + id);
                     User.points += messagesProcessed * awardAmount[i];
                     break;
                 }
