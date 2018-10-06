@@ -5,23 +5,27 @@ const guildMap = new Map();
 var bot;
 
 class Guild {
-    constructor() {
+    constructor(id) {
+        this.id = id;
         this.userListModified = false;
         this.pointsBoard = null;
         this.scoreBoard = null;
     }
-    
-    setTimer(time = 1000) {
+
+    setTimer(time = config.autopayOnInactivityTime * 1000) {
         setTimeout(function run() {
-            console.log("Test");
+            userMap.updateMemberScores(bot.guilds.get(id).members);
             setTimeout(run, time);
-          }, time);
+        }, time);
     }
 }
 
 module.exports = {
     init: function (client) {
         bot = client;
+    },
+    newGuild: function (guildID) {
+        newGuild(guildID)
     },
     /*
     Creates a leaderboard for a guildID if none exists, updates it if it does
@@ -62,9 +66,20 @@ module.exports = {
             }
         }
 
-        let createdGuild = new Guild();
-        createdGuild.setTimer();
+        let createdGuild;
+        if (guildMap.has(guildID)) {
+            createdGuild = guildMap.get(guildID);
+        } else {
+            createdGuild = newGuild(guildID);
+        }
         let currentBoard = newBoard(members, type);
+
+        if (type === "points") {
+            createdGuild.pointsBoard = currentBoard;
+        } else if (type === "score") {
+            createdGuild.scoreBoard = currentBoard;
+        }
+        createdGuild.userListModified = false;
 
         //Generates the string representation of the leaderboard
         for (var i = 0; i < currentBoard.length; i++) {
@@ -73,15 +88,6 @@ module.exports = {
                     + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
             }
         }
-
-        if (type === "points") {
-            createdGuild.pointsBoard = currentBoard;
-        } else if (type === "score") {
-            createdGuild.scoreBoard = currentBoard;
-        }
-
-        createdGuild.userListModified = false;
-        guildMap.set(guildID, createdGuild);
         return output;
     },
     //Notifies ADT that guild leaderboard has a change in member list, and needs to have
@@ -94,6 +100,14 @@ module.exports = {
         console.log("Member list change detected on guild " + guildID);
         guildMap.get(guildID).userListModified = true;
     }
+}
+
+//Creates a new guild class
+function newGuild(guildID) {
+    let createdGuild = new Guild(guildID);
+    createdGuild.setTimer();
+    guildMap.set(guildID, createdGuild);
+    return createdGuild;
 }
 
 //Determines appropriate sort to use and generates a new leaderboard
