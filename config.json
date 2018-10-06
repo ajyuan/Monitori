@@ -1,6 +1,7 @@
 {
     "token" : "",
     "botid" : "480595801869910016",
+    "admin" : "197158886287867904",
     "prefix" : "$",
     "filters" : ["$", "!"],
 
@@ -8,7 +9,7 @@
     "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
     "awardAmount" : [1, 2, 4, 6, 7],
 
-    "autopayOnInactivityTime" : 90,
+    "autopayOnInactivityTime" : 10,
     "autopayThreshold" : 0,
 
     "sortThreshold" : 20
