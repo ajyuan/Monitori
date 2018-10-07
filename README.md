@@ -7,7 +7,8 @@ I'm a sentiment analysis bot built for a social/messaging platform called Discor
 * Automatic garbage collection for inactive users to reduce memory usage
 * Dynamic credit system that rewards users based on the sentiment rating of their messages
 * Detailed leaderboard system (to remind members who the most positive users in the server are :p)
-* Dynamic message queue processing to analyze messages once the bot detects a conversation has ended
+* Dynamic message queue processing that analyze messages once the bot detects a conversation has ended
+* Built-in SQL importing and exporting for easy backup and modification
 
 # How I work 
 To determine the sentiment of users, I internally cache all messages written a server and map them to their respective users. Massage caching is used to improve my sentiment analysis accuracy, since analyzing a series of messages in a single conversation at once will allow me to better determine a user's overall sentiment in a conversation, as opposed to analysis on a per message basis. Automatic message caching can be switched on and off using the $activate and $deactivate commands, respectively. If you would like me to run without automatic caching, you can set set autopayThreshold to 1 in config.json. You can read more about my settings in the configuration section.

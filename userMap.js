@@ -142,7 +142,12 @@ module.exports = {
 
     //----- SQL FUNCTIONS -----
     createUser: function(userID, points, score, totalMessages) {
-
+        let newUser = new User(new LinkedList());
+        newUser.points = points;
+        newUser.score = score;
+        newUser.totalMessages = totalMessages;
+        userMap.set(userID, newUser);
+        console.log("Imported user " + userID);
     }
 };
 
@@ -150,10 +155,10 @@ module.exports = {
 //and map the user's id to it
 function newUserCheck(id) {
     if (!userMap.has(id)) {
-        console.log("Created new user for " + id);
         let messages = new LinkedList();
         let newUser = new User(messages);
         userMap.set(id, newUser);
+        console.log("Created new user for " + id);
     }
 }
 

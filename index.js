@@ -150,6 +150,14 @@ function commandCheck(message, command, args) {
             if (message.author.id === config.admin) {
                 dbHandler.backup();
             }
+            break;
+        case "shutoff":
+        case "shutdown":
+            if (message.author.id === config.admin) {
+                console.log("===== SHUTOFF SIGNAL RECEIVED =====");
+                dbHandler.shutdown(message.author.username);
+            }
+            break;
     }
 }
 
@@ -201,9 +209,9 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
-    console.log("----- READING USER DATABASE -----");
-    dbHandler.import();
-    console.log("----- ALL USERS SUCCESSFULLY IMPORTED -----");
+    //console.log("----- READING USER DATABASE -----");
+    dbHandler.importFile();
+    //console.log("----- ALL USERS SUCCESSFULLY IMPORTED -----");
     console.log("----- INITIALIZING GUILDMAP -----");
     guildMap.init(bot);
     //Creates a guild class for all guilds Monitori is currently servicing upon startup
