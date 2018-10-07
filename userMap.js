@@ -2,6 +2,8 @@ const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
 const config = require("./config.json");
 const userMap = new Map();
+const sql = require("sqlite");
+sql.open("./score.sqlite");
 var awardThreshold = config.awardThreshold;
 var awardAmount = config.awardAmount;
 
