@@ -5,6 +5,7 @@
     "filters" : ["$", "!"],
 
     "dynamicPoints" : true,
+    "sentimentThreshold" : 0.2,
     "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
     "awardAmount" : [1, 2, 4, 6, 7],
 

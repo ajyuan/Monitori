@@ -215,10 +215,12 @@ bot.on("disconnected", function () {
 bot.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
     guildMap.add(guild.id);
-    message.channel.send(new discord.RichEmbed()
-        .setColor(0x5eecff)
-        .setTitle("Monitori")
-        .setDescription(config.onJoinDescription));
+    if (guild.channels.exists("name", "general")) {
+        guild.channels.find("name", "general").send(new discord.RichEmbed()
+            .setColor(0x5eecff)
+            .setTitle("Monitori")
+            .setDescription(config.onJoinDescription));
+    }
 })
 
 //Removes a server from guildMap after leaving the server

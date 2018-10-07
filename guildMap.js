@@ -10,11 +10,13 @@ class Guild {
         this.userListModified = false;
         this.pointsBoard = null;
         this.scoreBoard = null;
+        this.timer;
     }
 
     setTimer(time = config.autopayOnInactivityTime * 1000) {
         let id = this.id;
-        setTimeout(function run() {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(function run() {
             console.log("Detected guild inactivity at " + id + ", analyzing cache");
             userMap.updateMemberScores(bot.guilds.get(id).members);
         }, time);
@@ -32,7 +34,7 @@ module.exports = {
     },
 
     remove: function (guildID) {
-        guildMap.remove(guildID);
+        guildMap.delete(guildID);
     },
 
     setActive: function (guildID) {
@@ -102,7 +104,7 @@ module.exports = {
 function newGuild(guildID) {
     console.log("Created new guild for " + guildID);
     let createdGuild = new Guild(guildID);
-    createdGuild.setTimer();
+    //createdGuild.setTimer();
     guildMap.set(guildID, createdGuild);
     return createdGuild;
 }
@@ -131,11 +133,11 @@ function updateMembersList(ids) {
 
 //Generates the string representation of the leaderboard
 function boardToString(currentBoard, type) {
-    var output = ""
+    var output = "";
     for (var i = 0; i < currentBoard.length; i++) {
         if (currentBoard[i] !== config.botid) {
             output += "**" + bot.users.get(currentBoard[i]).username
-                + "** | " + valueGetter(type, currentBoard[i]) + " pts\n";
+                + "** | " + valueGetter(type, currentBoard[i]) + ((type === "score") ? "" : " pts") + "\n";
         }
     }
     return output;
