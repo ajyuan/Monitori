@@ -17,7 +17,6 @@ class Guild {
         setTimeout(function run() {
             console.log("Detected guild inactivity at " + id + ", analyzing cache");
             userMap.updateMemberScores(bot.guilds.get(id).members);
-            setTimeout(run, time);
         }, time);
     }
 }
@@ -35,6 +34,10 @@ module.exports = {
     remove: function (guildID) {
         guildMap.remove(guildID);
     },
+
+    setActive: function (guildID) {
+        guildMap.get(guildID).setTimer();
+    },
     /*
     Creates a leaderboard for a guildID if none exists, updates it if it does
     Returns a formatted string of users to be printed by bot
@@ -46,12 +49,7 @@ module.exports = {
         var ids = [];
 
         if (!guildMap.has(guildID) || guildMap.get(guildID).userListModified) {
-            console.log("Member list outdated, regenerating");
-            guild.members.tap(user => {
-                userMap.idCheck(user.id);
-                userMap.updateUserScore(user.id);
-                members.push(user.id);
-            });
+            members = updateMembersList(guild.members);
         } else {
             if (type === "points") {
                 ids = guildMap.get(guildID).pointsBoard;
@@ -62,8 +60,7 @@ module.exports = {
                 process.exit(1);
             }
             if (ids === null) {
-                console.log("Leaderboard generation error: Guild leaderboard null");
-                process.exit(1);
+                ids = updateMembersList(guild.members);
             }
             let currentID;
             while (ids.length != 0) {
@@ -119,6 +116,17 @@ function newBoard(members, type) {
         console.log("Guild has " + members.length + " active members, using merge sort!");
         return mergeSort(members, type);
     }
+}
+
+function updateMembersList(ids) {
+    console.log("Updating guild member list");
+    let members = [];
+    ids.tap(user => {
+        userMap.idCheck(user.id);
+        userMap.updateUserScore(user.id);
+        members.push(user.id);
+    });
+    return members;
 }
 
 //Generates the string representation of the leaderboard

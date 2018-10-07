@@ -107,6 +107,8 @@ function commandCheck(message, command, args) {
             //console.log(message);
             if (logging) {
                 userMap.add(message)
+                console.log("TEST" + message.guild.id);
+                guildMap.setActive(message.guild.id);
                 break;
             }
 
@@ -194,7 +196,13 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
+    console.log("----- INITIALIZING GUILDMAP -----");
     guildMap.init(bot);
+    //Creates a guild class for all guilds Monitori is currently servicing upon startup
+    bot.guilds.tap(guild => {
+        guildMap.add(guild.id);
+    });
+    console.log("----- GUILDMAP INTIALIZED -----");
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
@@ -204,6 +212,7 @@ bot.on("disconnected", function () {
     process.exit(1);
 });
 
+//Creates a guild class upon entering a server
 bot.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
     guildMap.add(guild.id);
@@ -213,7 +222,7 @@ bot.on("guildCreate", guild => {
         .setDescription("Hello! My name is Monitori, a sentiment analysis bot for Discord."));
 })
 
-//removed from a server
+//Removes a server from guildMap after leaving the server
 bot.on("guildDelete", guild => {
     console.log("Left a guild: " + guild.name);
     guildMap.remove(guild.id);
