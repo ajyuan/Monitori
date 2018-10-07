@@ -10,6 +10,7 @@ let logging = true;
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
     if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
 
     //command processing
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -144,6 +145,10 @@ function commandCheck(message, command, args) {
                 .setTitle("Command: deactivate")
                 .setDescription("Logging has been deactivated!"));
             break;
+        case "backup":
+            if (message.author.id === config.admin) {
+                userMap.backup();
+            }
     }
 }
 
@@ -208,6 +213,7 @@ bot.on("ready", () => {
 bot.on("disconnected", function () {
     // alert the console
     console.log("Discord connection lost");
+    userMap.backup();
     process.exit(1);
 });
 

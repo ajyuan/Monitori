@@ -3,7 +3,7 @@ const LinkedList = require("linkedlist");
 const config = require("./config.json");
 const userMap = new Map();
 const sql = require("sqlite");
-sql.open("./score.sqlite");
+sql.open("./users.sqlite");
 var awardThreshold = config.awardThreshold;
 var awardAmount = config.awardAmount;
 
@@ -36,7 +36,7 @@ module.exports = {
 
         const id = message.author.id;
         //If a user does not exist in usermap, create a new user.
-        newUserCheck(id); 
+        newUserCheck(id);
         userMap.get(id).messages.push(message.content);  //Inserts the message
 
         if (config.autopay > 0 && userMap.get(id).messages.length >= config.autopayThreshold) {
@@ -47,10 +47,10 @@ module.exports = {
     //Checks if a user with this id exists in the userMap
     //If it doesn't, create one
     idCheck: function (id) {
-        newUserCheck (id);
+        newUserCheck(id);
     },
     // ------------------ SCORE FUNCTIONS ---------------------------
-    
+
     //Calculates and updates the sentiment score of a user
     //Returns true if elligable messages to process were found, returns false otherwise
     updateUserScore: function (id) {
@@ -133,6 +133,14 @@ module.exports = {
     //Returns a collection of all userIDs in the bot's userMap
     getKeys: function () {
         return userMap.keys();
+    },
+
+    write: function(userID) {
+        writeToSQL(userID);
+    },
+
+    backup: function() {
+        backupToSQL();
     }
 };
 
@@ -159,7 +167,7 @@ function pay(id) {
     while (User.messages.next()) {
         //Rewards one point per message if dynamic points is disabled
         if (!config.dynamicPoints) {
-            User.points ++;
+            User.points++;
         }
 
         /*
@@ -179,8 +187,8 @@ function pay(id) {
         //Calculate dynamic points
         const balancedAdjustment = adjustment / messagesProcessed;
         if (config.dynamicPoints && balancedAdjustment > awardThreshold[0]) {
-            for (let i = awardThreshold.length-1; i >= 0; i--) {
-                if(balancedAdjustment >= awardThreshold[i]) {
+            for (let i = awardThreshold.length - 1; i >= 0; i--) {
+                if (balancedAdjustment >= awardThreshold[i]) {
                     console.log(messagesProcessed * awardAmount[i] + " points awarded to " + id);
                     User.points += messagesProcessed * awardAmount[i];
                     break;
@@ -194,5 +202,28 @@ function pay(id) {
         User.messages = new LinkedList();
         User.totalMessages += messagesProcessed;
         return true;
+    }
+}
+
+function writeToSQL(userID) {
+    sql.get(`SELECT * FROM users WHERE userId ="${userID}"`).then(row => {
+        if (!row) {
+            sql.run("INSERT INTO users (userId, points, score) VALUES (?, ?, ?)", [userID, 1, 0]);
+        } else {
+            sql.run(`UPDATE users SET points = ${row.points + 1} WHERE userId = ${userID}`);
+        }
+    }).catch(() => {
+        console.error;
+        sql.run("CREATE TABLE IF NOT EXISTS users (userId TEXT, points INTEGER, score INTEGER)").then(() => {
+            sql.run("INSERT INTO users (userId, points, score) VALUES (?, ?, ?)", [userID, 1, 0]);
+        });
+    });
+    console.log(userID + " entered");
+}
+
+function backupToSQL() {
+    ids = userMap.keys();
+    for (let userID of ids) {
+        writeToSQL(userID);
     }
 }

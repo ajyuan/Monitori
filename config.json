@@ -9,7 +9,7 @@
     "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
     "awardAmount" : [1, 2, 4, 6, 7],
 
-    "autopayOnInactivityTime" : 10,
+    "autopayOnInactivityTime" : 30,
     "autopayThreshold" : 0,
 
     "sortThreshold" : 20,
