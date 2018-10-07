@@ -1,9 +1,9 @@
 const discord = require("discord.js");
-const config = require("./config.json");
-const token = require("./token.json");
+const config = require("./config/config.json");
+const token = require("./config/token.json");
 const userMap = require("./userMap");
 const guildMap = require("./guildMap");
-const exporter = require("./export.js");
+const dbHandler = require("./export.js");
 
 const bot = new discord.Client();
 let logging = true;
@@ -148,7 +148,7 @@ function commandCheck(message, command, args) {
             break;
         case "backup":
             if (message.author.id === config.admin) {
-                exporter.backup();
+                dbHandler.backup();
             }
     }
 }
@@ -201,6 +201,9 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
+    console.log("----- READING USER DATABASE -----");
+    dbHandler.import();
+    console.log("----- ALL USERS SUCCESSFULLY IMPORTED -----");
     console.log("----- INITIALIZING GUILDMAP -----");
     guildMap.init(bot);
     //Creates a guild class for all guilds Monitori is currently servicing upon startup
@@ -211,6 +214,7 @@ bot.on("ready", () => {
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
+//If bot has been unexpectedly disconnected, backup userMap to the SQL database and shut down
 bot.on("disconnected", function () {
     // alert the console
     console.log("Discord connection lost");

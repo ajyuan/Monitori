@@ -1,6 +1,6 @@
 const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
-const config = require("./config.json");
+const config = require("./config/config.json");
 const userMap = new Map();
 
 var awardThreshold = config.awardThreshold;
@@ -76,6 +76,8 @@ module.exports = {
             }
         });
     },
+
+    //------------------- DATA RETRIEVAL FUNCTIONS --------------------------
     //Returns a User's points
     points: function (id) {
         newUserCheck(id);
@@ -97,6 +99,10 @@ module.exports = {
         newUserCheck(id);
         let User = userMap.get(id);
         User.prevscore = User.score;
+    },
+    totalMessages: function(id) {
+        newUserCheck(id);
+        return userMap.get(id).totalMessages;
     },
 
     // ----------------- DATA FUNCTIONS ---------------------------
@@ -133,6 +139,11 @@ module.exports = {
     getKeys: function () {
         return userMap.keys();
     },
+
+    //----- SQL FUNCTIONS -----
+    createUser: function(userID, points, score, totalMessages) {
+
+    }
 };
 
 //Checks if a user's id already exists in the user map. If not, it will initialize a new user
