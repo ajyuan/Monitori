@@ -3,6 +3,7 @@ const config = require("./config.json");
 const token = require("./token.json");
 const userMap = require("./userMap");
 const guildMap = require("./guildMap");
+const exporter = require("./export.js");
 
 const bot = new discord.Client();
 let logging = true;
@@ -147,7 +148,7 @@ function commandCheck(message, command, args) {
             break;
         case "backup":
             if (message.author.id === config.admin) {
-                userMap.backup();
+                exporter.backup();
             }
     }
 }

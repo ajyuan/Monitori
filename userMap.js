@@ -2,8 +2,7 @@ const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
 const config = require("./config.json");
 const userMap = new Map();
-const sql = require("sqlite");
-sql.open("./users.sqlite");
+
 var awardThreshold = config.awardThreshold;
 var awardAmount = config.awardAmount;
 
@@ -134,14 +133,6 @@ module.exports = {
     getKeys: function () {
         return userMap.keys();
     },
-
-    write: function(userID) {
-        writeToSQL(userID);
-    },
-
-    backup: function() {
-        backupToSQL();
-    }
 };
 
 //Checks if a user's id already exists in the user map. If not, it will initialize a new user
@@ -202,28 +193,5 @@ function pay(id) {
         User.messages = new LinkedList();
         User.totalMessages += messagesProcessed;
         return true;
-    }
-}
-
-function writeToSQL(userID) {
-    sql.get(`SELECT * FROM users WHERE userId ="${userID}"`).then(row => {
-        if (!row) {
-            sql.run("INSERT INTO users (userId, points, score) VALUES (?, ?, ?)", [userID, 1, 0]);
-        } else {
-            sql.run(`UPDATE users SET points = ${row.points + 1} WHERE userId = ${userID}`);
-        }
-    }).catch(() => {
-        console.error;
-        sql.run("CREATE TABLE IF NOT EXISTS users (userId TEXT, points INTEGER, score INTEGER)").then(() => {
-            sql.run("INSERT INTO users (userId, points, score) VALUES (?, ?, ?)", [userID, 1, 0]);
-        });
-    });
-    console.log(userID + " entered");
-}
-
-function backupToSQL() {
-    ids = userMap.keys();
-    for (let userID of ids) {
-        writeToSQL(userID);
     }
 }
