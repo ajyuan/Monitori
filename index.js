@@ -1,5 +1,6 @@
 const discord = require("discord.js");
 const config = require("./config.json");
+const token = require("./token.json");
 const userMap = require("./userMap");
 const guildMap = require("./guildMap");
 
@@ -228,4 +229,4 @@ bot.on("guildDelete", guild => {
     guildMap.remove(guild.id);
 })
 
-bot.login(config.token);
+bot.login(token.token);
