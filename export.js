@@ -24,6 +24,7 @@ module.exports = {
     }
 }
 
+//Analyzes the message cache of a specific user and exports it to users.sqlite
 function writeToSQL(userID) {
     //Message cache is not stored in the SQL database, so analyze it and update user class before writing to SQL
     userMap.updateUserScore(userID);
@@ -42,6 +43,7 @@ function writeToSQL(userID) {
     });
 }
 
+//Analyzes the message cache stored in userMap and exports the resulting users into users.sqlite
 async function backupToSQL() {
     //Message cache is not stored in the SQL database, so analyze it and update user class before writing to SQL
     console.log("----- ANALYZING MESSAGE CACHE -----");
@@ -54,7 +56,8 @@ async function backupToSQL() {
     console.log("----- EXPORT COMPLETE -----");
 }
 
-
+//Imports a user with a given id from the SQL db if no user exists for that id, 
+//or reverts the user to the database version if user already exists in userMap
 function importUser(userID) {
     sql.get(`SELECT ALL FROM users WHERE userID ="${userID}"`).then(row => {
         if (!row) {
@@ -65,12 +68,14 @@ function importUser(userID) {
     });
 }
 
-async function importFile() {
-    await sql.get(`SELECT * FROM users`).then(row => {
+//Initializes userMap data from users.sqlite
+function importFile() {
+    return sql.get(`SELECT * FROM users`).then(row => {
         userMap.createUser(row.userID, row.points, row.score, row.totalMessages);
     });
 }
 
+//Waits for backup to complete, and shuts down the bot
 async function shutdown(user) {
     //Message cache is not stored in the SQL database, so analyze it and update user class before writing to SQL
     console.log("----- ANALYZING MESSAGE CACHE -----");
