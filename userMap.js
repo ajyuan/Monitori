@@ -166,7 +166,7 @@ function pay(id) {
         we will automatically filter out statements with relatively low compound scores
         to preserve consistency
         */
-        if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= 0.5) {
+        if (Math.abs(vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound) >= config.sentimentThreshold) {
             adjustment += vader.SentimentIntensityAnalyzer.polarity_scores(User.messages.current).compound;
             messagesProcessed++;
         }

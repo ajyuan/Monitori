@@ -10,7 +10,6 @@ let logging = true;
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
     if (message.author.bot) return;
-    if (message.content.indexOf(config.prefix) !== 0) return;
 
     //command processing
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -108,7 +107,6 @@ function commandCheck(message, command, args) {
             //console.log(message);
             if (logging) {
                 userMap.add(message)
-                console.log("TEST" + message.guild.id);
                 guildMap.setActive(message.guild.id);
                 break;
             }
@@ -132,7 +130,7 @@ function commandCheck(message, command, args) {
                 logging = true;
             }
             message.channel.send(new discord.RichEmbed()
-                .setColor(0x5eecff)
+                .setColor(0x47ff96)
                 .setTitle("Command: activate")
                 .setDescription("Logging is now active!"));
             break;
@@ -142,7 +140,7 @@ function commandCheck(message, command, args) {
                 logging = false;
             }
             message.channel.send(new discord.RichEmbed()
-                .setColor(0x5eecff)
+                .setColor(0xff6860)
                 .setTitle("Command: deactivate")
                 .setDescription("Logging has been deactivated!"));
             break;
@@ -217,10 +215,12 @@ bot.on("disconnected", function () {
 bot.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
     guildMap.add(guild.id);
-    message.channel.send(new discord.RichEmbed()
-        .setColor(0x5eecff)
-        .setTitle("Monitori")
-        .setDescription("Hello! My name is Monitori, a sentiment analysis bot for Discord."));
+    if (guild.channels.exists("name", "general")) {
+        guild.channels.find("name", "general").send(new discord.RichEmbed()
+            .setColor(0x5eecff)
+            .setTitle("Monitori")
+            .setDescription(config.onJoinDescription));
+    }
 })
 
 //Removes a server from guildMap after leaving the server

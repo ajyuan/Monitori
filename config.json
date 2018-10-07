@@ -5,11 +5,14 @@
     "filters" : ["$", "!"],
 
     "dynamicPoints" : true,
+    "sentimentThreshold" : 0.2,
     "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
     "awardAmount" : [1, 2, 4, 6, 7],
 
     "autopayOnInactivityTime" : 10,
     "autopayThreshold" : 0,
 
-    "sortThreshold" : 20
+    "sortThreshold" : 20,
+
+    "onJoinDescription" : "Hello, my name is Monitori! I'm a sentiment analysis and user engagement bot. Please type $help for availible commands. You can read more about me on my [Github]('https://github.com/TheEducatedPickle/Monitori'). Thanks for adding me, and have a great day!"
 }
