@@ -1,7 +1,8 @@
 const vader = require("vader-sentiment");
 const LinkedList = require("linkedlist");
-const config = require("./config.json");
+const config = require("./config/config.json");
 const userMap = new Map();
+
 var awardThreshold = config.awardThreshold;
 var awardAmount = config.awardAmount;
 
@@ -34,7 +35,7 @@ module.exports = {
 
         const id = message.author.id;
         //If a user does not exist in usermap, create a new user.
-        newUserCheck(id); 
+        newUserCheck(id);
         userMap.get(id).messages.push(message.content);  //Inserts the message
 
         if (config.autopay > 0 && userMap.get(id).messages.length >= config.autopayThreshold) {
@@ -45,10 +46,10 @@ module.exports = {
     //Checks if a user with this id exists in the userMap
     //If it doesn't, create one
     idCheck: function (id) {
-        newUserCheck (id);
+        newUserCheck(id);
     },
     // ------------------ SCORE FUNCTIONS ---------------------------
-    
+
     //Calculates and updates the sentiment score of a user
     //Returns true if elligable messages to process were found, returns false otherwise
     updateUserScore: function (id) {
@@ -70,11 +71,12 @@ module.exports = {
         let keys = Array.from(userMap.keys());
         keys.forEach(function (key, index) {
             if (key !== config.botid) {
-                console.log("Refreshing " + key);
                 pay(key);
             }
         });
     },
+
+    //------------------- DATA RETRIEVAL FUNCTIONS --------------------------
     //Returns a User's points
     points: function (id) {
         newUserCheck(id);
@@ -96,6 +98,10 @@ module.exports = {
         newUserCheck(id);
         let User = userMap.get(id);
         User.prevscore = User.score;
+    },
+    totalMessages: function(id) {
+        newUserCheck(id);
+        return userMap.get(id).totalMessages;
     },
 
     // ----------------- DATA FUNCTIONS ---------------------------
@@ -131,6 +137,17 @@ module.exports = {
     //Returns a collection of all userIDs in the bot's userMap
     getKeys: function () {
         return userMap.keys();
+    },
+
+    //----- SQL FUNCTIONS -----
+    createUser: function(userID, points, score, totalMessages) {
+        let newUser = new User(new LinkedList());
+        newUser.points = points;
+        newUser.prevscore = score;
+        newUser.score = score;
+        newUser.totalMessages = totalMessages;
+        userMap.set(userID, newUser);
+        console.log("Imported user " + userID);
     }
 };
 
@@ -138,16 +155,17 @@ module.exports = {
 //and map the user's id to it
 function newUserCheck(id) {
     if (!userMap.has(id)) {
-        console.log("Created new user for " + id);
         let messages = new LinkedList();
         let newUser = new User(messages);
         userMap.set(id, newUser);
+        console.log("Created new user for " + id);
     }
 }
 
 //Processes the message queue associated with a user id
 //Returns false if user has a null score, returns true otherwise
 function pay(id) {
+    console.log("Analyzing message log " + id);
     newUserCheck(id);
     let User = userMap.get(id);
     let messagesProcessed = 0;
@@ -157,7 +175,7 @@ function pay(id) {
     while (User.messages.next()) {
         //Rewards one point per message if dynamic points is disabled
         if (!config.dynamicPoints) {
-            User.points ++;
+            User.points++;
         }
 
         /*
@@ -177,8 +195,8 @@ function pay(id) {
         //Calculate dynamic points
         const balancedAdjustment = adjustment / messagesProcessed;
         if (config.dynamicPoints && balancedAdjustment > awardThreshold[0]) {
-            for (let i = awardThreshold.length-1; i >= 0; i--) {
-                if(balancedAdjustment >= awardThreshold[i]) {
+            for (let i = awardThreshold.length - 1; i >= 0; i--) {
+                if (balancedAdjustment >= awardThreshold[i]) {
                     console.log(messagesProcessed * awardAmount[i] + " points awarded to " + id);
                     User.points += messagesProcessed * awardAmount[i];
                     break;

@@ -1,5 +1,5 @@
 const userMap = require("./userMap");
-const config = require("./config.json");
+const config = require("./config/config.json");
 const guildMap = new Map();
 
 var bot;

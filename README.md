@@ -7,6 +7,8 @@ I'm a sentiment analysis bot built for a social/messaging platform called Discor
 * Automatic garbage collection for inactive users to reduce memory usage
 * Dynamic credit system that rewards users based on the sentiment rating of their messages
 * Detailed leaderboard system (to remind members who the most positive users in the server are :p)
+* Dynamic message queue processing that analyze messages once the bot detects a conversation has ended
+* Built-in SQL importing and exporting for easy backup and modification
 
 # How I work 
 To determine the sentiment of users, I internally cache all messages written a server and map them to their respective users. Massage caching is used to improve my sentiment analysis accuracy, since analyzing a series of messages in a single conversation at once will allow me to better determine a user's overall sentiment in a conversation, as opposed to analysis on a per message basis. Automatic message caching can be switched on and off using the $activate and $deactivate commands, respectively. If you would like me to run without automatic caching, you can set set autopayThreshold to 1 in config.json. You can read more about my settings in the configuration section.
@@ -28,6 +30,7 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **awardThreshold:** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
 **awardAmount:** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold* <br />
 **autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages. Higher threshold is recommended for more accurate seniment analysis. Lower threshold is recommended if you want to reduce memory usage. Set to 0 to disable (score must be manually calculated using $score or $refresh). <br />
+**autobackupTime:** Monitori will analyze the message cache and write user data to its SQL database every x minutes.
 **sortThreshold:** This number defines the guild size at which Monitori will switch from Insertion Sort to Merge Sort for generating leaderboard. <br />
 
 # Notes

@@ -1,8 +1,9 @@
 const discord = require("discord.js");
-const config = require("./config.json");
-const token = require("./token.json");
+const config = require("./config/config.json");
+const token = require("./config/token.json");
 const userMap = require("./userMap");
 const guildMap = require("./guildMap");
+const dbHandler = require("./export.js");
 
 const bot = new discord.Client();
 let logging = true;
@@ -10,6 +11,7 @@ let logging = true;
 bot.on("message", (message) => {
     //reject bot messages and other messages that are outside the scope of the bot's purpose
     if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
 
     //command processing
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -144,6 +146,18 @@ function commandCheck(message, command, args) {
                 .setTitle("Command: deactivate")
                 .setDescription("Logging has been deactivated!"));
             break;
+        case "backup":
+            if (message.author.id === config.admin) {
+                dbHandler.backup();
+            }
+            break;
+        case "shutoff":
+        case "shutdown":
+            if (message.author.id === config.admin) {
+                console.log("===== SHUTOFF SIGNAL RECEIVED =====");
+                dbHandler.shutdown();
+            }
+            break;
     }
 }
 
@@ -174,15 +188,7 @@ function payout(message) {
     }
 }
 
-bot.on("guildMemberAdd", (member) => {
-    guildMap.flag(member.guild.id);
-})
-
-bot.on("guildMemberRemove", (member) => {
-    guildMap.flag(member.guild.id);
-})
-
-bot.on("ready", () => {
+bot.on("ready", async function() {
     bot.user.setStatus("availible")
     bot.user.setPresence({
         game: {
@@ -195,6 +201,9 @@ bot.on("ready", () => {
         console.log("ERROR: Please make sure awardThreshold and awardAmount have the same number of elements");
         process.exit(1);
     }
+    //console.log("----- READING USER DATABASE -----");
+    dbHandler.importFile();
+    //console.log("----- ALL USERS SUCCESSFULLY IMPORTED -----");
     console.log("----- INITIALIZING GUILDMAP -----");
     guildMap.init(bot);
     //Creates a guild class for all guilds Monitori is currently servicing upon startup
@@ -202,12 +211,23 @@ bot.on("ready", () => {
         guildMap.add(guild.id);
     });
     console.log("----- GUILDMAP INTIALIZED -----");
+    dbHandler.startAutobackup();
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
+bot.on("guildMemberAdd", (member) => {
+    guildMap.flag(member.guild.id);
+})
+
+bot.on("guildMemberRemove", (member) => {
+    guildMap.flag(member.guild.id);
+})
+
+//If bot has been unexpectedly disconnected, backup userMap to the SQL database and shut down
 bot.on("disconnected", function () {
     // alert the console
     console.log("Discord connection lost");
+    userMap.backup();
     process.exit(1);
 });
 
