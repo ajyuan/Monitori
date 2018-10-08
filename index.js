@@ -188,15 +188,7 @@ function payout(message) {
     }
 }
 
-bot.on("guildMemberAdd", (member) => {
-    guildMap.flag(member.guild.id);
-})
-
-bot.on("guildMemberRemove", (member) => {
-    guildMap.flag(member.guild.id);
-})
-
-bot.on("ready", () => {
+bot.on("ready", async function() {
     bot.user.setStatus("availible")
     bot.user.setPresence({
         game: {
@@ -220,6 +212,14 @@ bot.on("ready", () => {
     });
     console.log("----- GUILDMAP INTIALIZED -----");
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
+})
+
+bot.on("guildMemberAdd", (member) => {
+    guildMap.flag(member.guild.id);
+})
+
+bot.on("guildMemberRemove", (member) => {
+    guildMap.flag(member.guild.id);
 })
 
 //If bot has been unexpectedly disconnected, backup userMap to the SQL database and shut down

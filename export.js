@@ -28,7 +28,7 @@ module.exports = {
 function writeToSQL(userID) {
     //Message cache is not stored in the SQL database, so analyze it and update user class before writing to SQL
     userMap.updateUserScore(userID);
-    return sql.get(`SELECT * FROM users WHERE userID ="${userID}"`).then(row => {
+    return sql.get(`SELECT userID,points,score,totalMessages FROM users WHERE userID ="${userID}"`).then(row => {
         if (!row) {
             sql.run("INSERT INTO users (userID, points, score, totalMessages) VALUES (?, ?, ?, ?)", [userID, userMap.points(userID), userMap.score(userID), userMap.totalMessages(userID)]);
         } else {
@@ -59,7 +59,7 @@ async function backupToSQL() {
 //Imports a user with a given id from the SQL db if no user exists for that id, 
 //or reverts the user to the database version if user already exists in userMap
 function importUser(userID) {
-    sql.get(`SELECT ALL FROM users WHERE userID ="${userID}"`).then(row => {
+    sql.get(`SELECT userID,points,score,totalMessages FROM users WHERE userID ="${userID}"`).then(row => {
         if (!row) {
             console.log("EXPORT.JS READUSER ERROR: readUser called on user not in database");
             return;
@@ -70,8 +70,10 @@ function importUser(userID) {
 
 //Initializes userMap data from users.sqlite
 function importFile() {
-    return sql.get(`SELECT * FROM users`).then(row => {
-        userMap.createUser(row.userID, row.points, row.score, row.totalMessages);
+    sql.all(`SELECT userID,points,score,totalMessages FROM users`).then(rows => {
+        for (i = 0; i < rows.length; i++) {
+            userMap.createUser(rows[i].userID, rows[i].points, rows[i].score, rows[i].totalMessages);
+        }
     });
 }
 
