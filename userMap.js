@@ -71,7 +71,6 @@ module.exports = {
         let keys = Array.from(userMap.keys());
         keys.forEach(function (key, index) {
             if (key !== config.botid) {
-                console.log("Refreshing " + key);
                 pay(key);
             }
         });
@@ -144,6 +143,7 @@ module.exports = {
     createUser: function(userID, points, score, totalMessages) {
         let newUser = new User(new LinkedList());
         newUser.points = points;
+        newUser.prevscore = score;
         newUser.score = score;
         newUser.totalMessages = totalMessages;
         userMap.set(userID, newUser);
@@ -165,6 +165,7 @@ function newUserCheck(id) {
 //Processes the message queue associated with a user id
 //Returns false if user has a null score, returns true otherwise
 function pay(id) {
+    console.log("Analyzing message log " + id);
     newUserCheck(id);
     let User = userMap.get(id);
     let messagesProcessed = 0;

@@ -30,6 +30,7 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **awardThreshold:** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
 **awardAmount:** Used for Dynamic Points. If a given user's message queue is lower bounded by a given award threshold, Monitori will use the index of that threshold to map to this array. *Note: This array must be the same size as awardThreshold* <br />
 **autopayThreshold:** Monitori will automatically process all messages in a user's log after it reaches this number of messages. Higher threshold is recommended for more accurate seniment analysis. Lower threshold is recommended if you want to reduce memory usage. Set to 0 to disable (score must be manually calculated using $score or $refresh). <br />
+**autobackupTime:** Monitori will analyze the message cache and write user data to its SQL database every x minutes.
 **sortThreshold:** This number defines the guild size at which Monitori will switch from Insertion Sort to Merge Sort for generating leaderboard. <br />
 
 # Notes

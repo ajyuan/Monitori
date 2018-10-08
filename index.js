@@ -155,7 +155,7 @@ function commandCheck(message, command, args) {
         case "shutdown":
             if (message.author.id === config.admin) {
                 console.log("===== SHUTOFF SIGNAL RECEIVED =====");
-                dbHandler.shutdown(message.author.username);
+                dbHandler.shutdown();
             }
             break;
     }
@@ -211,6 +211,7 @@ bot.on("ready", async function() {
         guildMap.add(guild.id);
     });
     console.log("----- GUILDMAP INTIALIZED -----");
+    dbHandler.startAutobackup();
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
