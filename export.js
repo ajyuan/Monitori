@@ -81,6 +81,11 @@ function importUser(userID) {
         }
         userMap.createUser(row.userID, row.points, row.score, row.totalMessages);
         console.log("SQL: Imported user " + row.userID);
+    }).catch(() => {
+        console.error;
+        sql.run("CREATE TABLE IF NOT EXISTS users (userID TEXT, points INTEGER, score INTEGER, totalMessages INTEGER)").then(() => {
+            sql.run("INSERT INTO users (userID, points, score, totalMessages) VALUES (?, ?, ?, ?)", [userID, userMap.points(userID), userMap.score(userID), userMap.totalMessages(userID)]);
+        });
     });
 }
 
@@ -90,6 +95,11 @@ function importFile() {
         for (i = 0; i < rows.length; i++) {
             userMap.createUser(rows[i].userID, rows[i].points, rows[i].score, rows[i].totalMessages);
         }
+    }).catch(() => {
+        console.error;
+        sql.run("CREATE TABLE IF NOT EXISTS users (userID TEXT, points INTEGER, score INTEGER, totalMessages INTEGER)").then(() => {
+            sql.run("INSERT INTO users (userID, points, score, totalMessages) VALUES (?, ?, ?, ?)", [userID, userMap.points(userID), userMap.score(userID), userMap.totalMessages(userID)]);
+        });
     });
 }
 
