@@ -5,9 +5,10 @@
     "filters" : ["$", "!"],
 
     "dynamicPoints" : true,
-    "sentimentThreshold" : 0.2,
-    "awardThreshold" : [-0.6, -0.2, 0.2, 0.6, 0.8],
-    "awardAmount" : [1, 2, 4, 6, 7],
+    "sentimentThreshold" : 0.25,
+    "awardThreshold" : [-0.6, -0.2, 0.1, 0.5],
+    "awardAmount" : [1, 2, 3, 4],
+    "defaultAwardAmount" : 2,
 
     "autopayOnInactivityTime" : 30,
     "autopayThreshold" : 0,

@@ -6,7 +6,7 @@ sql.open("./db/users.sqlite");
 module.exports = {
     startAutobackup: function () {
         setTimeout(function run() {
-            console.log("Running autobackup");
+            console.log("RUNNING AUTOBACKUP...");
             writeAllToSQL();
             setTimeout(run, config.autobackupTime * 60000);
         }, config.autobackupTime * 60000);
@@ -16,21 +16,21 @@ module.exports = {
         writeUserToSQL(userID);
     },
 
-backup: function () {
-    writeAllToSQL();
-},
+    backup: function () {
+        writeAllToSQL();
+    },
 
-importUser: function (userID) {
-    importUser(userID);
-},
+    importUser: function (userID) {
+        importUser(userID);
+    },
 
-importFile: function () {
-    importFile();
-},
+    importFile: function () {
+        importFile();
+    },
 
-shutdown: function () {
-    shutdown();
-}
+    shutdown: function () {
+        shutdown();
+    }
 }
 
 //Analyzes the message cache of a specific user and exports it to users.sqlite
@@ -80,6 +80,7 @@ function importUser(userID) {
             return;
         }
         userMap.createUser(row.userID, row.points, row.score, row.totalMessages);
+        console.log("SQL: Imported user " + row.userID);
     });
 }
 
@@ -95,9 +96,7 @@ function importFile() {
 //Waits for backup to complete, and shuts down the bot
 async function shutdown() {
     //Message cache is not stored in the SQL database, so analyze it and update user class before writing to SQL
-    console.log("----- ANALYZING MESSAGE CACHE -----");
-    userMap.updateAllScores();
-    console.log("----- MESSAGE CACHE CLEARED, EXPORTING USERS -----");
+    console.log("----- EXPORTING USERS -----");
     ids = userMap.getKeys();
     let promises = [];
     for (let userID of ids) {

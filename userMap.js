@@ -99,7 +99,7 @@ module.exports = {
         let User = userMap.get(id);
         User.prevscore = User.score;
     },
-    totalMessages: function(id) {
+    totalMessages: function (id) {
         newUserCheck(id);
         return userMap.get(id).totalMessages;
     },
@@ -140,14 +140,13 @@ module.exports = {
     },
 
     //----- SQL FUNCTIONS -----
-    createUser: function(userID, points, score, totalMessages) {
+    createUser: function (userID, points, score, totalMessages) {
         let newUser = new User(new LinkedList());
         newUser.points = points;
         newUser.prevscore = score;
         newUser.score = score;
         newUser.totalMessages = totalMessages;
         userMap.set(userID, newUser);
-        console.log("Imported user " + userID);
     }
 };
 
@@ -158,14 +157,14 @@ function newUserCheck(id) {
         let messages = new LinkedList();
         let newUser = new User(messages);
         userMap.set(id, newUser);
-        console.log("Created new user for " + id);
+        console.log("USERMAP: Created new user for " + id);
     }
 }
 
 //Processes the message queue associated with a user id
 //Returns false if user has a null score, returns true otherwise
 function pay(id) {
-    console.log("Analyzing message log " + id);
+    console.log("USERMAP: Analyzing message log " + id);
     newUserCheck(id);
     let User = userMap.get(id);
     let messagesProcessed = 0;
@@ -173,11 +172,6 @@ function pay(id) {
 
     User.messages.resetCursor();
     while (User.messages.next()) {
-        //Rewards one point per message if dynamic points is disabled
-        if (!config.dynamicPoints) {
-            User.points++;
-        }
-
         /*
         Calculates cumulative sentiment of all messages in message queue
         Because most sentenances may not be easily identified as positive or negative sentiment,
@@ -197,8 +191,12 @@ function pay(id) {
         if (config.dynamicPoints && balancedAdjustment > awardThreshold[0]) {
             for (let i = awardThreshold.length - 1; i >= 0; i--) {
                 if (balancedAdjustment >= awardThreshold[i]) {
-                    console.log(messagesProcessed * awardAmount[i] + " points awarded to " + id);
+                    console.log("         + " + messagesProcessed * awardAmount[i] + " points");
                     User.points += messagesProcessed * awardAmount[i];
+                    break;
+                } else {
+                    console.log("         + " + messagesProcessed * config.defaultAwardAmount + " points");
+                    User.points += messagesProcessed * config.defaultAwardAmount;
                     break;
                 }
             }
