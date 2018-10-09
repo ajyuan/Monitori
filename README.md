@@ -19,18 +19,18 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
 **userMap.js** This file acts as the main database for storing information about each discord user. Information stored in here is global, meaning user statistics will be preserved across guilds. It does the following operations: <br />
 * Maps the ID of every Discord user to a User class, which stores important user information such as score history. points, and total messages. <br />
-* Stores the bot's message cache, since messages must be mapped to each user. <br />
-* Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br />
+* Stores the bot's message cache, since messages must be mapped to each user. <br /> 
+* Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br /> <a/>
 **guildMap.js** This file contains the ranking system for each guild Monitori serves. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). It performs the following operations. <br />
 * Creates update calls to userMap for memebers of a guild.<br />
 * Sorts members of a guild by a given type, (ex. score or points). <br />
-* Stores the bot's Guild classes, which cache generated leaderboards for more efficient sorting. If a new leaderboard is requested for a guild where a previous one had been generated, it may feed a previously sorted array to generate the leaderboard more efficiently, based on certain conditions. <br />
+* Stores the bot's Guild classes, which cache generated leaderboards for more efficient sorting. If a new leaderboard is requested for a guild where a previous one had been generated, it may feed a previously sorted array to generate the leaderboard more efficiently, based on certain conditions. <br /> <a/>
 **export.js:** This file is responsible for handling the SQL database. It handles importing and exporting users to/from users.sqlite and userMap.js. It is also responsible for automatically backing up userMap and data storage on shutdown.<br />
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
 # Configuration
-In order for Monitori to function, it must be provided a bot token. Begin by creating a token.json file and placing it in the config folder. Use token: "token" <br />
-##Settings
+In order for Monitori to function, it must be provided a bot token. Begin by creating a token.json file and placing it in the config folder. Use { token: "token" }<br />
+
 **botid:** This is the Monitori's user id. It's used for ignoring bot messages. <br />
 **admin:** This is the user id of the bot admin. Monitori will only accept certain commands if the sender's user ID matches this.
 **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori. <br />
