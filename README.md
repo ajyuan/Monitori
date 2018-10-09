@@ -17,6 +17,7 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 
 # Files
 **index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
+
 **userMap.js** This file acts as the main database for storing information about each discord user. Information stored in here is global, meaning user statistics will be preserved across guilds. It does the following operations: <br />
 * Maps the ID of every Discord user to a User class, which stores important user information such as score history. points, and total messages. <br />
 * Stores the bot's message cache, since messages must be mapped to each user. <br /> 
@@ -30,6 +31,7 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 <a/>
 
 **export.js:** This file is responsible for handling the SQL database. It handles importing and exporting users to/from users.sqlite and userMap.js. It is also responsible for automatically backing up userMap and data storage on shutdown.<br />
+
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
 # Configuration
