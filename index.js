@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 const config = require("./config/config.json");
-const token = require("./config/token.json");
+//const token = require("./config/token.json");
 const userMap = require("./userMap");
 const guildMap = require("./guildMap");
 const dbHandler = require("./export.js");
