@@ -249,4 +249,4 @@ bot.on("guildDelete", guild => {
     guildMap.remove(guild.id);
 })
 
-bot.login(token.token);
+bot.login(process.env.token);
