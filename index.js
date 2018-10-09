@@ -179,7 +179,7 @@ function payout(message) {
         let currScore = userMap.score(id);
         message.channel.send(new discord.RichEmbed()
             .setColor(0x5eecff)
-            .setTitle("Command: score")
+            .setTitle("User: " + message.author.username)
             .addField("Points:", userMap.points(id) + " pts")
             .addField("Sentiment rating:",
                 (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")

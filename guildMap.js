@@ -112,10 +112,10 @@ function newGuild(guildID) {
 //Determines appropriate sort to use and generates a new leaderboard
 function newBoard(members, type) {
     if (members.length < config.sortThreshold) {
-        console.log("Guild has " + members.length + " active member(s), using insertion sort!");
+        //console.log("Guild has " + members.length + " active member(s), using insertion sort!");
         return insertionSort(members, type);
     } else {
-        console.log("Guild has " + members.length + " active members, using merge sort!");
+        //console.log("Guild has " + members.length + " active members, using merge sort!");
         return mergeSort(members, type);
     }
 }
