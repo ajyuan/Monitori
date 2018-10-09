@@ -20,11 +20,13 @@ When prompted, I determine a user's positivity using the VADER sentiment analysi
 **userMap.js** This file acts as the main database for storing information about each discord user. Information stored in here is global, meaning user statistics will be preserved across guilds. It does the following operations: <br />
 * Maps the ID of every Discord user to a User class, which stores important user information such as score history. points, and total messages. <br />
 * Stores the bot's message cache, since messages must be mapped to each user. <br /> 
-* Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br /> <a/>
+* Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br />
+<a/>
 **guildMap.js** This file contains the ranking system for each guild Monitori serves. Leaderboard is required to be a seperate data structure because, unlike userMap (which is a global database), leaderBoard must be server specific, (i.e., a user can be 1st place in one server but 5th place in another). It performs the following operations. <br />
 * Creates update calls to userMap for memebers of a guild.<br />
 * Sorts members of a guild by a given type, (ex. score or points). <br />
-* Stores the bot's Guild classes, which cache generated leaderboards for more efficient sorting. If a new leaderboard is requested for a guild where a previous one had been generated, it may feed a previously sorted array to generate the leaderboard more efficiently, based on certain conditions. <br /> <a/>
+* Stores the bot's Guild classes, which cache generated leaderboards for more efficient sorting. If a new leaderboard is requested for a guild where a previous one had been generated, it may feed a previously sorted array to generate the leaderboard more efficiently, based on certain conditions. <br /> 
+<a/>
 **export.js:** This file is responsible for handling the SQL database. It handles importing and exporting users to/from users.sqlite and userMap.js. It is also responsible for automatically backing up userMap and data storage on shutdown.<br />
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
