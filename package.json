@@ -15,7 +15,7 @@
   "dependencies": {
     "discord.js": "^11.4.2",
     "dotenv": "^6.1.0",
-    "fs": "0.0.1-security",
+    "express": "^4.16.3",
     "linkedlist": "^1.0.1",
     "npm": "^6.4.1",
     "sqlite": "^3.0.0",

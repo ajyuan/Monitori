@@ -13,6 +13,8 @@ class Guild {
         this.timer;
     }
 
+    //This timer is used to detect when an active conversation has ended so the bot
+    //can automatically analyze messages once the conversation has ended
     setTimer(time = config.autopayOnInactivityTime * 1000) {
         let id = this.id;
         clearTimeout(this.timer);
@@ -33,10 +35,13 @@ module.exports = {
         newGuild(guildID);
     },
 
+    //Removes a guild from the guildmap given an ID
     remove: function (guildID) {
         guildMap.delete(guildID);
     },
 
+    //Notifies guildmap that a guild has an active conversation and creates a timer 
+    //to detect when the conversation has ended to be analyzed 
     setActive: function (guildID) {
         guildMap.get(guildID).setTimer();
     },
@@ -96,7 +101,10 @@ module.exports = {
             process.exit(1);
         }
         console.log("Member list change detected on guild " + guildID);
-        guildMap.get(guildID).userListModified = true;
+        flaggedGuild = guildMap.get(guildID);
+        flaggedGuild.userListModified = true;
+        flaggedGuild.pointsBoard = null;
+        flaggedGuild.scoreBoard = null;
     }
 }
 

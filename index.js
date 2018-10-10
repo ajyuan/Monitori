@@ -216,6 +216,8 @@ bot.on("ready", async function() {
     console.log(`Monitori is now online, serving ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
 })
 
+//If a guild member is added, cached leaderboards can't be used when generating a new leaderboard
+//So, flag the guild and clear the cache
 bot.on("guildMemberAdd", (member) => {
     guildMap.flag(member.guild.id);
 })
@@ -250,4 +252,18 @@ bot.on("guildDelete", guild => {
     guildMap.remove(guild.id);
 })
 
+//Keeps bot alive when being hosted
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
+
+//Starts bot login
 bot.login(process.env.token);
