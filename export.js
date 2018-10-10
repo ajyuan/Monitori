@@ -1,7 +1,7 @@
 const userMap = require("./userMap");
 const config = require("./config/config.json");
 const sql = require("sqlite");
-sql.open("./db/users.sqlite");
+sql.open("./users.sqlite");
 
 module.exports = {
     startAutobackup: function () {
