@@ -113,7 +113,13 @@ function commandCheck(message, command, args) {
                 guildMap.setActive(message.guild.id);
                 break;
             }
-
+        case "help":
+            message.channel.send(new discord.RichEmbed()
+                .setColor(0x5eecff)
+                .setTitle("Monitori help")
+                .addField("Commands", "**$score:** View your current score\n **$leaderboard <args>:** View server leaderboards (arguments: score, points)")
+            );
+            break;
         //Show logging status
         case "status":
             let myInfo = new discord.RichEmbed()
@@ -189,7 +195,7 @@ function payout(message) {
     }
 }
 
-bot.on("ready", async function() {
+bot.on("ready", async function () {
     bot.user.setStatus("availible")
     bot.user.setPresence({
         game: {
@@ -257,12 +263,12 @@ const http = require('http');
 const express = require('express');
 const app = express();
 app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping Received");
-  response.sendStatus(200);
+    console.log(Date.now() + " Ping Received");
+    response.sendStatus(200);
 });
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
 
 //Starts bot login
