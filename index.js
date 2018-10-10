@@ -1,3 +1,4 @@
+require('dotenv').config();
 const discord = require("discord.js");
 const config = require("./config/config.json");
 //const token = require("./config/token.json");

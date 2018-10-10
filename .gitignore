@@ -1,3 +1,4 @@
 token.json
 users.sqlite
 node_modules
+.env
