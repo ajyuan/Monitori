@@ -1,4 +1,5 @@
 token.json
 users.sqlite
+users.sqlite-journal
 node_modules
 .env
