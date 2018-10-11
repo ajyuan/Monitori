@@ -257,19 +257,21 @@ bot.on("guildDelete", guild => {
     console.log("Left a guild: " + guild.name);
     guildMap.remove(guild.id);
 })
-
-//Keeps bot alive when being hosted
-const http = require('http');
-const express = require('express');
-const app = express();
-app.get("/", (request, response) => {
-    console.log(Date.now() + " Ping Received");
-    response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
+if (process.env.glitchHosting === true) {
+    //Keeps bot alive when being hosted
+    console.log("Detected hosting on Glitch.com, keeping alive")
+    const http = require('http');
+    const express = require('express');
+    const app = express();
+    app.get("/", (request, response) => {
+        console.log(Date.now() + " Ping Received");
+        response.sendStatus(200);
+    });
+    app.listen(process.env.PORT);
+    setInterval(() => {
+        http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+    }, 280000);
+}
 
 //Starts bot login
 bot.login(process.env.token);
