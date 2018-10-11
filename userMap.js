@@ -169,6 +169,7 @@ function pay(id) {
     let User = userMap.get(id);
     let messagesProcessed = 0;
     let adjustment = 0;
+    let totalMessages = User.messages.length;
 
     User.messages.resetCursor();
     while (User.messages.next()) {
@@ -194,12 +195,11 @@ function pay(id) {
                     console.log("         + " + messagesProcessed * awardAmount[i] + " points");
                     User.points += messagesProcessed * awardAmount[i];
                     break;
-                } else {
-                    console.log("         + " + messagesProcessed * config.defaultAwardAmount + " points");
-                    User.points += messagesProcessed * config.defaultAwardAmount;
-                    break;
                 }
             }
+        } else {
+            console.log("         + " + messagesProcessed * config.defaultAwardAmount + " points");
+            User.points += totalMessages * config.defaultAwardAmount;
         }
 
         //Update user statistics and clears the user's message queue
