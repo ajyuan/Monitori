@@ -257,7 +257,7 @@ bot.on("guildDelete", guild => {
     console.log("Left a guild: " + guild.name);
     guildMap.remove(guild.id);
 })
-if (process.env.glitchHosting === true) {
+if (process.env.glitchHosting === "true") {
     //Keeps bot alive when being hosted
     console.log("Detected hosting on Glitch.com, keeping alive")
     const http = require('http');
