@@ -12,7 +12,7 @@
 
     "autopayOnInactivityTime" : 30,
     "autopayThreshold" : 0,
-    "autobackupTime" : 20,
+    "autobackupTime" : 5,
 
     "sortThreshold" : 20,
 
