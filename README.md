@@ -19,7 +19,7 @@ When prompted or when I detect a conversation has ended, I determine a user's po
 **index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
 
 **userMap.js** This file acts as the main database for storing information about each discord user. Information stored in here is global, meaning user statistics will be preserved across guilds. It does the following operations: <br />
-* Maps the ID of every Discord user to a User class, which stores important user information such as score history. points, and total messages. <br />
+* Maps the ID of every Discord user to a User class, which stores important user information such as score history, points, and total messages. <br />
 * Stores the bot's message cache, since messages must be mapped to each user. <br /> 
 * Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br />
 <a/>
