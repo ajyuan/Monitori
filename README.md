@@ -35,7 +35,7 @@ When prompted or when I detect a conversation has ended, I determine a user's po
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
 # Configuration
-In order for Monitori to function, it must be provided a bot token. Create a .env file with token=<token><br />
+In order for Monitori to function, it must be provided a bot token. Create a .env file with token="token". Config file options:<br />
 
 * **botid:** This is the Monitori's user id. It's used for ignoring bot messages. <br />
 * **admin:** This is the user id of the bot admin. Monitori will only accept certain commands if the sender's user ID matches this.
