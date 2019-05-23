@@ -16,12 +16,14 @@ class Guild {
     //This timer is used to detect when an active conversation has ended so the bot
     //can automatically analyze messages once the conversation has ended
     setTimer(time = config.autopayOnInactivityTime * 1000) {
-        let id = this.id;
-        clearTimeout(this.timer);
-        this.timer = setTimeout(function run() {
-            console.log("Detected guild inactivity at " + id + ", analyzing cache");
-            userMap.updateMemberScores(bot.guilds.get(id).members);
-        }, time);
+        if (time != 0) {
+            let id = this.id;
+            clearTimeout(this.timer);
+            this.timer = setTimeout(function run() {
+                console.log("Detected guild inactivity at " + id + ", analyzing cache");
+                userMap.updateMemberScores(bot.guilds.get(id).members);
+            }, time);
+        }
     }
 }
 
