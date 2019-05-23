@@ -19,7 +19,7 @@ When prompted or when I detect a conversation has ended, I determine a user's po
 **index.js:** The main file for the discord bot. It handles the bots interaction with Discord, such as login, message handling, and disconnection. <br />
 
 **userMap.js** This file acts as the main database for storing information about each discord user. Information stored in here is global, meaning user statistics will be preserved across guilds. It does the following operations: <br />
-* Maps the ID of every Discord user to a User class, which stores important user information such as score history. points, and total messages. <br />
+* Maps the ID of every Discord user to a User class, which stores important user information such as score history, points, and total messages. <br />
 * Stores the bot's message cache, since messages must be mapped to each user. <br /> 
 * Performs operations on users, such as analyzing message cache, calculating points and sentiment, and returning values. <br />
 <a/>
@@ -35,7 +35,7 @@ When prompted or when I detect a conversation has ended, I determine a user's po
 **config.json** This file contains variables that allow you to configure the bot easily. You can read more about each variable in the configuration section. <br />
 
 # Configuration
-In order for Monitori to function, it must be provided a bot token. Create a .env file with token=<br />
+In order for Monitori to function, it must be provided a bot token. Create a .env file with token="token". Config file options:<br />
 
 * **botid:** This is the Monitori's user id. It's used for ignoring bot messages. <br />
 * **admin:** This is the user id of the bot admin. Monitori will only accept certain commands if the sender's user ID matches this.
