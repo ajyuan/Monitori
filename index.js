@@ -116,13 +116,15 @@ function commandCheck(message, command, args) {
         case "help":
             message.channel.send(new discord.RichEmbed()
                 .setColor(0x5eecff)
-                .setTitle("Monitori help")
-                .addField("About Me", 
+                .setTitle("Monitori Help")
+                .addField("About Me",
                     "Hello! My name is Monitori! I am a bot that encourages positive engagement by rewarding points to users who frequently talk on this server."
                     + "The more positive your messages are, the more points you'll earn!\n\n"
-                    + "You can view your current score by typing **$score** in chat. You can see the most impactful people on this server by typing **$leaderboard points**."
+                )
+                .addField("Commands",
+                    "You can view your current score by typing **$score** in chat. You can see the most impactful people on this server by typing **$leaderboard points**."
                     + "You can also see who has the highest overall positivity using **$leaderboard score**"
-                )    
+                )
             );
             break;
         //Show logging status
@@ -195,7 +197,7 @@ function payout(message) {
             .addField("Points:", userMap.points(id) + " pts")
             .addField("Sentiment rating:",
                 (Math.round(currScore * 1000) / 1000) + " (" + ((currScore >= prevScore) ? "increased " : "decreased ")
-                + Math.round(Math.abs(currScore - prevScore)*1000)/1000 + " from " + Math.round(prevScore * 1000) / 1000 + ")"));
+                + Math.round(Math.abs(currScore - prevScore) * 1000) / 1000 + " from " + Math.round(prevScore * 1000) / 1000 + ")"));
         userMap.shiftScore(id);
     }
 }
