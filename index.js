@@ -117,7 +117,12 @@ function commandCheck(message, command, args) {
             message.channel.send(new discord.RichEmbed()
                 .setColor(0x5eecff)
                 .setTitle("Monitori help")
-                .addField("Commands", "**$score:** View your current score\n **$leaderboard <args>:** View server leaderboards (arguments: score, points)")
+                .addField("About Me", 
+                    "Hello! My name is Monitori! I am a bot that encourages positive engagement by rewarding points to users who frequently talk on this server."
+                    + "The more positive your messages are, the more points you'll earn!\n\n"
+                    + "You can view your current score by typing **$score** in chat. You can see the most impactful people on this server by typing **$leaderboard points**."
+                    + "You can also see who has the highest overall positivity using **$leaderboard score**"
+                )    
             );
             break;
         //Show logging status
