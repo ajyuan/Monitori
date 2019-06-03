@@ -52,3 +52,6 @@ In order for Monitori to function, it must be provided a bot token. Create a .en
 
 # Notes
 * While Monitori is capable of analyzing text emoticons, it is not able to analyze emojis. Because of this, it is recommended to disable automatic emoticon to emoji conversion (located in Settings > Text & Images) for best results.
+
+# Support
+[Discord Server](https://discord.gg/s45pCZC)
