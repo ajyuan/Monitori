@@ -164,7 +164,7 @@ function newUserCheck(id) {
 //Processes the message queue associated with a user id
 //Returns false if user has a null score, returns true otherwise
 function pay(id) {
-    console.log("USERMAP: Analyzing message log " + id);
+    //console.log("USERMAP: Analyzing message log " + id);
     newUserCheck(id);
     let User = userMap.get(id);
     let messagesProcessed = 0;

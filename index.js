@@ -125,6 +125,10 @@ function commandCheck(message, command, args) {
                     "You can view your current score by typing **$score** in chat. You can see the most impactful people on this server by typing **$leaderboard points**."
                     + "You can also see who has the highest overall positivity using **$leaderboard score**"
                 )
+                .addField("Additional Info",
+                    "* [Github](https://github.com/TheEducatedPickle/Monitori)\n"
+                    + "* [Upvote me on Discord Bots!](https://discordbots.org/bot/480595801869910016)"
+                )
             );
             break;
         //Show logging status

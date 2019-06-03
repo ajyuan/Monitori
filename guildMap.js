@@ -52,7 +52,7 @@ module.exports = {
     Returns a formatted string of users to be printed by bot
     */
     leaderboard: function (guild, type) {
-        guildID = guild.id;
+        let guildID = guild.id;
         console.log("Generating leaderboard for guild: " + guildID);
         var members = [];
         var ids = [];
@@ -103,7 +103,7 @@ module.exports = {
             process.exit(1);
         }
         console.log("Member list change detected on guild " + guildID);
-        flaggedGuild = guildMap.get(guildID);
+        let flaggedGuild = guildMap.get(guildID);
         flaggedGuild.userListModified = true;
         flaggedGuild.pointsBoard = null;
         flaggedGuild.scoreBoard = null;
