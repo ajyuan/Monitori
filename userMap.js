@@ -28,7 +28,7 @@ module.exports = {
             return;
         }
         for (let i = 0; i < config.filters.length; i++) {
-            if (message.content.charAt(0) === config.filters[i]) {
+            if (message.content.startsWith(config.filters[i])) {
                 return;
             }
         }

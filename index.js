@@ -15,8 +15,14 @@ bot.on("message", (message) => {
     if (message.channel.type === "dm") return;
 
     //command processing
+    if (!message.content.startsWith(config.prefix)) {
+        return;
+    }
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    if (message.author.id === config.admin) {
+        console.log(args)
+    }
     commandCheck(message, command, args);
 })
 
@@ -122,12 +128,15 @@ function commandCheck(message, command, args) {
                     + "The more positive your messages are, the more points you'll earn!\n\n"
                 )
                 .addField("Commands",
-                    "You can view your current score by typing **$score** in chat. You can see the most impactful people on this server by typing **$leaderboard points**."
-                    + "You can also see who has the highest overall positivity using **$leaderboard score**"
+                    "You can view your current score by typing **$m score** in chat. You can see the most impactful people on this server by typing **$m leaderboard points**."
+                    + "You can also see who has the highest overall positivity using **$m leaderboard score**"
                 )
                 .addField("Additional Info",
-                    "* [Github](https://github.com/TheEducatedPickle/Monitori)\n"
-                    + "* [Upvote me on Discord Bots!](https://discordbots.org/bot/480595801869910016)"
+                    "Monitori is currently being hosting on a Raspberry Pi B+. I'm looking into upgrading my hosting platform if this becomes significantly popular :>\n"
+                    + "* [Github](https://github.com/TheEducatedPickle/Monitori)\n"
+                    + "* [Support Server & Suggestion Box](https://discord.gg/s45pCZC)\n"
+                    + "* [Upvote me on Discord Bots!](https://discordbots.org/bot/480595801869910016)\n"
+                    + "* [My creator is looking for a job! (austinyuan.com)](https://austinyuan.com)"
                 )
             );
             break;

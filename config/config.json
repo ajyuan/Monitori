@@ -1,7 +1,7 @@
 {
     "botid" : "480595801869910016",
     "admin" : "197158886287867904",
-    "prefix" : "$",
+    "prefix" : "$m",
     "filters" : ["$", "!"],
 
     "dynamicPoints" : true,
@@ -11,10 +11,10 @@
     "defaultAwardAmount" : 2,
 
     "autopayOnInactivityTime" : 0,
-    "autopayThreshold" : 1,
+    "autopayThreshold" : 5,
     "autobackupTime" : 20,
 
     "sortThreshold" : 15,
 
-    "onJoinDescription" : "Hello, my name is Monitori! I'm a sentiment analysis and user engagement bot. Please type $help for availible commands. You can read more about me on my [Github]('https://github.com/TheEducatedPickle/Monitori'). Thanks for adding me, and have a great day!"
+    "onJoinDescription" : "Hello, my name is Monitori! I'm a sentiment analysis and user engagement bot. Please type $m help for availible commands. You can read more about me on my [Github]('https://github.com/TheEducatedPickle/Monitori'). Thanks for adding me, and have a great day!"
 }

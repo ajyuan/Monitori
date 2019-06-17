@@ -1,6 +1,6 @@
 # About
 Hello, my name is Monitori! <br />
-I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase user engagement while encouraging positivity and rewarding server members for saying nice things :D. I am currently hosted on Glitch.com.
+I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase user engagement while encouraging positivity and rewarding server members for saying nice things :D. I am currently hosted on a Raspberry Pi B+, althought I also have the built in functionality to run perpetually on Glitch.io
 
 # Features
 * Message caching system for adaptive score calculation and more accurate sentiment analysis
