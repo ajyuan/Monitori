@@ -1,6 +1,13 @@
 const userMap = require("./userMap");
 const config = require("./config/config.json");
 const sql = require("sqlite");
+
+try {
+    process.chdir(config.dbDirectory);
+} catch (err) {
+    console.log('Directory not available')
+}
+
 sql.open("./users.sqlite");
 
 module.exports = {

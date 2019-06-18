@@ -16,5 +16,7 @@
 
     "sortThreshold" : 15,
 
-    "onJoinDescription" : "Hello, my name is Monitori! I'm a sentiment analysis and user engagement bot. Please type $m help for availible commands. You can read more about me on my [Github]('https://github.com/TheEducatedPickle/Monitori'). Thanks for adding me, and have a great day!"
+    "onJoinDescription" : "Hello, my name is Monitori! I'm a sentiment analysis and user engagement bot. Please type $m help for availible commands. You can read more about me on my [Github]('https://github.com/TheEducatedPickle/Monitori'). Thanks for adding me, and have a great day!",
+
+    "dbStoreDirectory" : "/../home/pi/Monitori"
 }
