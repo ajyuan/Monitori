@@ -3,7 +3,7 @@ const config = require("./config/config.json");
 const sql = require("sqlite");
 
 try {
-    process.chdir(config.dbDirectory);
+    process.chdir(config.dbStoreDirectory);
 } catch (err) {
     console.log('Directory not available')
 }
