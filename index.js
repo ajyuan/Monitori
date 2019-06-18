@@ -15,21 +15,19 @@ bot.on("message", (message) => {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
 
-    //command processing
-    if (!message.content.startsWith(config.prefix)) {
-        return;
-    }
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if (message.author.id === config.admin) {
-        console.log(args)
-    }
     commandCheck(message, command, args);
 })
 
 /*This is the main message handing function
 It will handle incoming messages and run the appropriate function if a command is detected*/
 function commandCheck(message, command, args) {
+    if (!message.content.startsWith(config.prefix)) {
+        userMap.add(message)
+        guildMap.setActive(message.guild.id);
+        return;
+    }
     switch (command) {
         //------------------- USERMAP FUNCTIONS -------------------
         //Calculate a user's score
@@ -112,14 +110,6 @@ function commandCheck(message, command, args) {
             break;
 
         //------------------- BOT FUNCTIONS -------------------
-        //Log all messages that aren't recognized commands
-        default:
-            //console.log(message);
-            if (logging) {
-                userMap.add(message)
-                guildMap.setActive(message.guild.id);
-                break;
-            }
         case "help":
             message.channel.send(new discord.RichEmbed()
                 .setColor(0x5eecff)
