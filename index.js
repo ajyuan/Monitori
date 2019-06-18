@@ -295,9 +295,9 @@ if (process.env.glitchHosting === "true") {
 }
 
 //Log errors
-bot.on('error', error => {
-    console.error('The WebSocket encountered an error:', error);
-});
+bot.on("error", (e) => console.error(e));
+bot.on("warn", (e) => console.warn(e));
+bot.on("debug", (e) => console.info(e));
 
 //Starts bot login
 bot.login(process.env.token);
