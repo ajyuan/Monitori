@@ -17,6 +17,7 @@
     "dotenv": "^6.1.0",
     "express": "^4.16.3",
     "linkedlist": "^1.0.1",
+    "longjohn": "^0.2.12",
     "npm": "^6.4.1",
     "sqlite": "^3.0.0",
     "vader-sentiment": "^1.1.3"

@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('longjohn')
 const discord = require("discord.js");
 const config = require("./config/config.json");
 //const token = require("./config/token.json");
@@ -292,6 +293,11 @@ if (process.env.glitchHosting === "true") {
         http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
     }, 280000);
 }
+
+//Log errors
+bot.on('error', error => {
+    console.error('The WebSocket encountered an error:', error);
+});
 
 //Starts bot login
 bot.login(process.env.token);
