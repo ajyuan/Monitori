@@ -1,4 +1,4 @@
-## This is the "production" version of Monitori, which uses VADER for quick and effective sentiment analysis without the need to deploy a Flask server
+### This is the "production" version of Monitori, which uses VADER for quick and effective sentiment analysis without the need to deploy a Flask server
 
 # About
 Hello, my name is Monitori! <br />
