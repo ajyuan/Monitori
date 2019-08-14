@@ -1,8 +1,6 @@
-This is the "production" version of Monitori, which uses VADER for quick and effective sentiment analysis without the need to deploy a Flask server
-
 # About
 Hello, my name is Monitori! <br />
-I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase user engagement while encouraging positivity and rewarding server members for saying nice things :D. I am currently hosted on a Raspberry Pi B+, althought I also have the built in functionality to run perpetually on Glitch.io
+I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase user engagement while encouraging positivity and rewarding server members for saying nice things :D. I am currently hosted on a Raspberry Pi B+, althought I also have the built in functionality to run on Glitch.io. To support hosting on Raspberry Pi, I use VADER to perform efficient sentiment analysis.
 
 # Features
 * Message caching system for adaptive score calculation and more accurate sentiment analysis

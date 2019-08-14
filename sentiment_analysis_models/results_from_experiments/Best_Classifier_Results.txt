@@ -1,0 +1,15 @@
+The accuracy of the best classifier is: 0.8607142857142858
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<131>  9 |
+positive |  30<110>|
+---------+---------+
+(row = reference; col = test)
+

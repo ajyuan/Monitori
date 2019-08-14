@@ -1,0 +1,324 @@
+The accuracy of word_features on the Naive Bayes NLTK classifier on dev_examples.tsv set is: 0.8642857142857143
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<132>  8 |
+positive |  30<110>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_pos_features on the Naive Bayes NLTK classifier on dev_examples.tsv set is: 0.7571428571428571
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<131>  9 |
+positive |  59 <81>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_pos_liwc_features on the Naive Bayes NLTK classifier on dev_examples.tsv set is: 0.775
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<124> 16 |
+positive |  47 <93>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_features on the Naive Bayes NLTK classifier on test_examples.tsv set is: 0.8308457711442786
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<190> 11 |
+positive |  57<144>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_pos_features on the Naive Bayes NLTK classifier on test_examples.tsv set is: 0.7860696517412935
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<194>  7 |
+positive |  79<122>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_pos_liwc_features on the Naive Bayes NLTK classifier on test_examples.tsv set is: 0.7786069651741293
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<182> 19 |
+positive |  70<131>|
+---------+---------+
+(row = reference; col = test)
+
+==============================================
+THE FOLLOWING ARE ON MOST INFORMATIVE FEATURES
+==============================================
+Naive Bayes NLTK: dev_examples.tsv - word_features is: 0.8535714285714285
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<131>  9 |
+positive |  32<108>|
+---------+---------+
+(row = reference; col = test)
+
+Naive Bayes NLTK: test_examples.tsv - word_features is: 0.8258706467661692
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<188> 13 |
+positive |  57<144>|
+---------+---------+
+(row = reference; col = test)
+
+Naive Bayes Sklearn: dev_examples.tsv - word_features is: 0.7428571428571429
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative | <77> 63 |
+positive |   9<131>|
+---------+---------+
+(row = reference; col = test)
+
+Naive Bayes Sklearn: test_examples.tsv - word_features is: 0.736318407960199
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<109> 92 |
+positive |  14<187>|
+---------+---------+
+(row = reference; col = test)
+
+Decision Tree Sklearn: dev_examples.tsv - word_features is: 0.7571428571428571
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<106> 34 |
+positive |  34<106>|
+---------+---------+
+(row = reference; col = test)
+
+Decision Tree Sklearn: test_examples.tsv - word_features is: 0.7189054726368159
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<136> 65 |
+positive |  48<153>|
+---------+---------+
+(row = reference; col = test)
+
+SVM Sklearn: dev_examples.tsv - word_features is: 0.5285714285714286
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |  <9>131 |
+positive |   1<139>|
+---------+---------+
+(row = reference; col = test)
+
+SVM Sklearn: test_examples.tsv - word_features is: 0.5323383084577115
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative | <16>185 |
+positive |   3<198>|
+---------+---------+
+(row = reference; col = test)
+
+=============================
+WORD EMBEDDINGS
+=============================
+SVM Sklearn: dev_examples.tsv - word embeddings is: 0.7285714285714285
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<118> 22 |
+positive |  54 <86>|
+---------+---------+
+(row = reference; col = test)
+
+SVM Sklearn: test_examples.tsv - word embeddings is: 0.7189054726368159
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<166> 35 |
+positive |  78<123>|
+---------+---------+
+(row = reference; col = test)
+
+=============================
+MISC
+=============================
+The accuracy of word_features is: 0.8642857142857143 on naive bayes nltk
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<132>  8 |
+positive |  30<110>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_features is: 0.6607142857142857 on naive bayes sklearn
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative | <48> 92 |
+positive |   3<137>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_features is: 0.7607142857142857 on decision tree nltk
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<114> 26 |
+positive |  41 <99>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_features is: 0.7714285714285715 on decision tree sklearn
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |<112> 28 |
+positive |  36<104>|
+---------+---------+
+(row = reference; col = test)
+
+The accuracy of word_features is: 0.5071428571428571 on svm sklearn
+         |   n   p |
+         |   e   o |
+         |   g   s |
+         |   a   i |
+         |   t   t |
+         |   i   i |
+         |   v   v |
+         |   e   e |
+---------+---------+
+negative |  <2>138 |
+positive |   .<140>|
+---------+---------+
+(row = reference; col = test)
+

@@ -1,0 +1,397 @@
+%
+across               10 41
+advantage*           12 13 15
+ago                  37 38
+alone                12 16 19
+along                10 41 44
+already              37
+alright*             08
+also                 44
+although             45
+always               26 37
+anyone*              01 25 31 33
+anything*            01 25
+anywhere             25 41
+appeared             27 28 38
+area                 41
+around               10 41
+arrived              46
+ask                  27 29 31 32 39
+asked                27 29 31 32 38
+asking               27 29 31 32
+ate                  27 38 60 63
+aware*               20 22
+away                 10
+awesome*             12 13
+awful                12 16
+baby                 31 36
+bad                  12 16
+bar                  60 63
+become               20 39
+beer*                60 63
+begin                37 39
+believe              20 22 39
+best                 12 13 15 47 50
+better               12 13 47 50
+big*                 41
+block*               20 24
+bone*                60 61
+boring               12 16
+boy                  31 36
+boyfriend*           31 34
+boys                 31 36
+break                39
+breakfast            60 63
+bring                39 46
+brother*             31 35
+brought              38 46
+brunch               60 63
+business*            47 49
+cafeteria*           47 48 60 63
+call                 27 29 31 32 39
+called               27 29 31 32 38
+came                 38
+care                 12 13 14 39
+careful*             12 13 20 24
+cash*                56
+change               39
+changed              38
+cheap*               56
+check                47 49 56
+children             31 36
+class                47 48
+clean*               51 52 60 65
+clear                20 22 26
+close*               41
+come                 39
+comes                39
+companion            31 34
+complain*            12 16 31 32
+complete             20
+completely           26
+cook*                60 63
+cost*                56
+could                20 23
+courses              47 48
+creative*            12 13
+cut                  12 16 18
+daughter*            31 35
+day*                 37
+delicious*           12 13
+department*          47 48 49
+describe             20 31 32 39
+described            20 31 32 38
+dessert              60 63
+die                  39 57 59
+dinner*              60 63
+dish                 60 63
+dishes               60 63
+done                 20 38
+doubt*               12 16 20 25
+drink                27 39 60 63
+drinks               27 39 60 63
+drive                39 46
+easy*                12 13 15
+eat                  27 39 60 63
+eaten                27 38 60 63
+eating               27 60 63
+elegant*             12 13
+end                  20 37
+ended                20 38
+english              47 48
+enjoy*               12 13 14
+even                 25
+evening*             37
+everyone*            01 31 33
+everything*          01 31 33
+except*              45
+explained            20 22 31 32 38
+face                 60 61
+fact*                20 26
+family               31 35 51 52
+fantastic*           12 13
+far                  41
+feel                 27 30 39
+feeling*             20 22 27 30
+felt                 20 22 27 30 38
+find*                20 22 39
+fine                 08
+finish               20 37 39
+finished             37 39
+first                11 47 50
+fit                  20
+folks                31 35
+foot                 60 61
+found                20 22 21 38
+four*                11
+free*                12 13 15
+friday               37
+friend               31 34
+friends*             31 34
+fun                  12 13
+gave                 31 32 38
+get                  39
+gets                 39
+girlfriend*          31 34
+give                 31 32 39
+given                31 32 38
+go                   39 46
+goes                 39 46
+going                46
+gone                 38 46
+good                 12 13
+got                  38
+group*               31
+guess                25 39
+guy*                 31 36
+hair*                60 61 65
+half                 11
+hand                 60 61
+hands                60 61
+happened             38
+happy                12 13 14
+head                 60 61
+heard                27 29 31 32 38
+heart                60 61
+help                 31 39
+high*                41 42
+home                 51 52
+honey                31 34
+hope                 12 13 15 20 23 25 39
+hour*                37
+house*               51 52
+however              45
+husband*             31 35
+inside               10 41
+job*                 47 49
+keep                 39
+kept                 38
+kids                 31 36
+kind                 <of>20/12 <of>25/13
+kitchen*             51 52 60 63
+knew                 20 22 38
+know                 20 22 39
+known                20 22
+lady                 31 36
+large*               41
+last                 37
+late*                37
+leave                39
+left                 38
+legs                 60 61
+like                 (01 23)12/69 (01 23)13 (01 23)14 39
+liked                12 13 14 38
+live                 39 51 52
+living               51 52
+look                 27 28 39
+looked               27 28 38
+looking              27 28
+love                 12 13 14 39 60 62
+loved                12 13 14 38 60 62
+lovely               12 13
+loves                12 13 14 60 62 39
+low*                 12 16 19 41 43
+lunch*               60 63
+made                 38
+make                 39
+makes                39
+man                  31 36
+market               47 49
+may                  25 40
+maybe                25
+meal*                60 63
+means                20 22 39
+meant                20 22 38
+meet                 31 32 39
+meeting*             31 32 47 49
+mention*             31 32
+messy                12 16
+middle               41
+might                25 40
+miles                41
+mind*                20
+mine                 01 02 04
+miss                 12 16 19 39
+missed               12 16 19 38
+missing              12 16 19
+moment*              37
+money                56
+month*               37
+mood                 12
+morning*             37
+mother*              31 35
+mouth                60 61
+move                 39 46
+moved                38 46
+movie*               51 54
+must                 20 23
+near                 10 41
+nearly               25
+neat                 12 13
+need                 20 23 39
+needed               20 23 38
+needs                20 23 39
+never*               07 26 37
+new                  37
+next                 37
+nice*                12 13
+night                37
+nights               37
+noise*               27 29
+none                 07
+north*               41
+nothing              01 07
+office*              47 49
+ok                   08 12 13
+okay                 08 12 13
+old                  37
+one                  11
+onto                 10 41 42
+original             12 13 15 47 50
+outside              10 41
+paid                 38 47 49 56
+party*               12 13 31
+past                 37 38
+pay                  39 47 49 56
+paying               47 49 56
+people*              31 36
+perfect              12 13 47 50
+perfection           12 13 47 50
+perhaps              25
+person               31 36
+place*               41
+playing              12 13 51 53
+pleasant             12 13
+pleased              12 13
+poor                 56
+popular*             12 13
+present              37
+pretty               20 25
+price*               56
+produce*             20 21 47 50
+rather               45
+read                 20 27 28
+ready                12 13 15
+remember*            20
+rib                  60 61
+ribs                 60 61
+romantic*            12 13 14
+room                 51 52
+rude*                12 16 18
+run                  39 46
+said                 27 29 31 32 38
+sat                  38
+saturday*            37
+saw                  20 22 27 28 38
+say*                 27 29 31 32
+school*              47 48
+second               11
+see                  20 22 27 28 39
+seeing               20 22 27 28
+seemed               20 25 38
+seems                20 25 39
+seen                 27 28 38
+sell                 39 56
+shame*               12 16
+short*               41
+show                 27 28 39 51 54
+side                 41
+since                10 20 21
+sit                  39
+sits                 39
+small*               41
+smell*               27
+smoke                39
+smoked               38
+someone*             01 25 31 33
+something*           01 25
+son                  31 35
+soon                 37
+sorry                12 16
+soul                 57 58
+sound*               27 29
+south*               41
+speak                27 29 31 32 39
+special              12 13
+stand                39
+start                37 39
+started              37 38
+stay                 39
+stayed               38
+stood                38
+stop                 20 24 37 39
+suggest*             31 32
+summer               37
+sunday*              37
+supposed             25 38
+sure*                12 13 26
+surrounding          41
+sweet                12 13 27
+take                 39 46
+taken                38
+takes                39 46
+talk                 27 29 31 32 39
+talked               27 29 31 32 38
+tell                 27 29 31 32 39
+tender*              12 13 60 61
+thank                12 13 39
+think                20 22 39
+third                11
+thought              20 22 38
+three                11
+time*                37
+today*               37 39
+together             44
+told                 27 29 31 32 38
+took                 38 46
+top                  12 13 15 41 42
+totally              26
+tried                20 38 47 50
+true*                12 13
+truly                26
+try                  20 39 47 50
+trying               20 47 50
+turn                 39
+turned               38
+twice                11
+two                  11
+understand           20 22 39
+unless               45
+unpleasant           12 16
+upon                 10 41 42
+upset*               12 16 17
+upstairs             41 42
+us                   01 03 04 31 33
+use                  39
+used                 38
+view                 27 28 39
+visit*               46
+wait                 20 24 39
+waited               20 24 38
+waiting              20 24
+walk                 39 46
+walked               38 46
+walking              46
+want                 20 23 39
+wanted               20 23 38
+wanting              20 23
+wants                20 23 39
+warm                 12 13
+week*                37
+went                 38 46
+wide*                41
+wife*                31 35
+within               10 41 44
+without              07 10 45
+wonder               20 22 25 39
+wondering            20 22 25
+work                 39 47 49 50
+working              47 49 50
+worse*               12 16
+worth                56
+would                20 23
+wrong*               12 16
+year*                37
+yes                  08
+young*               37
+
