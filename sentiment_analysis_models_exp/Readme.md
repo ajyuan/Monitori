@@ -20,4 +20,4 @@ To run sentiment_classifier.py: python evaluate.py -d <testing_file_name> -w <ou
 
 ### Findings
 * NLTK Naive Bayes model using tokenized word features performs best
-* Feature selection and model based classification is unfeasable on a Raspberry Pi at expected scale
+* Feature selection and model based classification is likely to cause performance bottlenecks on a Raspberry Pi at expected scale
