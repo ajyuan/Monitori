@@ -42,7 +42,7 @@ In order for Monitori to function, it must be provided a bot token. Create a .en
 
 * **botid:** This is the Monitori's user id. It's used for ignoring bot messages. <br />
 * **admin:** This is the user id of the bot admin. Monitori will only accept certain commands if the sender's user ID matches this.
-* **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori. <br />
+* **prefix:** Sets the character that commands must be preceded by in ordered to be recognized as a command by Monitori. Default: "$"<br />
 * **filters:** Any messages with these prefixes will be ignored. This is useful for ignoring bot commands, etc. <br />
 * **dynamicPoints:** Enables or disables Monitori's seniment based point system, which rewards points dynamically based on the determined sentiment of a user's messages. Disable to have points rewarded purely on a message volume basis. (1pt awarded for every message sent). <br />
 * **awardThreshold:** Used for Dynamic Points. Monitori will calculate the cumulative sentiment of queued messages and compare it to each award threshold to determine how many points to award per message. Each threshold is a lower bound. *Note: This value must be given specified in sorted order, from least to greatest. This array must be the same size as awardAmount*<br />
