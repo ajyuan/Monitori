@@ -1,4 +1,4 @@
-## This folder stores the sentiment classifier
+## This folder stores the sentiment classifier. It was orignially a custom built sentiment classifier, but no longer used in favor of VADER. See README at root directory for details
 
 ### Directorys
 * data: train/dev/test data

@@ -1,3 +1,6 @@
+![Mobile_Img](https://github.com/TheEducatedPickle/Monitori/blob/master/readme_images/help.png?raw=true)
+<br />
+
 # About
 Hello, my name is Monitori! <br />
 I'm a sentiment analysis bot built for a social/messaging platform called Discord. My purpose is to increase user engagement while encouraging positivity and rewarding server members for saying nice things :D. I am currently hosted on a Raspberry Pi B+, althought I also have the built in functionality to run on Glitch.io. To support hosting on Raspberry Pi, I use VADER to perform efficient sentiment analysis.
